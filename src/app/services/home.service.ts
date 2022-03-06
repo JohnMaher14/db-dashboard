@@ -58,4 +58,30 @@ export class HomeService {
       }
     )
   }
+  getBannerImage():Observable<any>{
+    return this._HttpClient.get(`${environment.apiUrl}banner_image_index`)
+  }
+  updateBannerImage(
+    services_banner_image: File,
+    services_detail_banner_image: File,
+    say_hello_banner_image: File,
+    feedback_banner_image: File,
+    contact_banner_image: File,
+
+  ):Observable<any>{
+    var formData = new FormData();
+    formData.append('services_banner_image',services_banner_image);
+    formData.append('services_detail_banner_image',services_detail_banner_image);
+    formData.append('say_hello_banner_image',say_hello_banner_image);
+    formData.append('feedback_banner_image',feedback_banner_image);
+    formData.append('contact_banner_image',contact_banner_image);
+    return this._HttpClient.post(`${environment.apiUrl}banner_image_update/1`,
+
+      formData,
+      {
+        reportProgress: true,
+        observe:'events'
+      }
+    )
+  }
 }

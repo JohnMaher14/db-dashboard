@@ -6,7 +6,7 @@
     </div>
     <div class="col-lg-3">
 
-    <button data-toggle="modal" [attr.data-target]="'#createClient'" class="btn btn-light w-100">Create {{pageName}}</button>
+    <button data-toggle="modal" [attr.data-target]="'#createCaseStudy'" class="btn btn-light w-100">Create {{pageName}}</button>
     </div>
   </div>  <div class="card-body">
     <div *ngIf="success" class="alert alert-success" role="alert">
@@ -25,8 +25,8 @@
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>Image</th>
                     <th>Title</th>
+                    <th>Image</th>
                     <th>Type</th>
 
                     <th>&nbsp;</th>
@@ -34,15 +34,16 @@
             </thead>
             <tbody>
 
-                <tr *ngFor="let client of clients">
-                    <td>{{client.id}}</td>
-                    <td><img [src]="clientImage+client.logo" width="100px" alt=""></td>
-                    <td>{{client.en_title}}</td>
-                    <td>{{client.type}}</td>
+                <tr *ngFor="let CaseStudy of caseStudies">
+                    <td>{{CaseStudy.id}}</td>
+                    <td>{{CaseStudy.en_title}}</td>
+                    <td><img [src]="caseStudyImage+CaseStudy.image" width="100px" alt=""></td>
+                    <td><img [src]="caseStudyImage+CaseStudy.banner_image" width="100px" alt=""></td>
+                    <!-- <td>{{CaseStudy.type}}</td> -->
 
                     <td class="row justify-content-center no-gutters">
-                      <a routerLink="/clients/{{client?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
-                      <button (click)="onDelete(client.id , clientImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
+                      <a routerLink="/case-studies/{{CaseStudy?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
+                      <button (click)="onDelete(CaseStudy.id , caseStudyImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
                     </td>
                 </tr>
 
@@ -56,7 +57,7 @@
   </div>
 </div>
 <!-- Modal -->
-<div #createModal class="modal fade" id="createClient" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div #createModal class="modal fade" id="createCaseStudy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -65,7 +66,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form [formGroup]="createClient" (ngSubmit)="onCreate()">
+      <form [formGroup]="createCaseStudy" (ngSubmit)="onCreate()">
           <div class="modal-body">
             <div class="row">
               <div class="col-md-6">
@@ -93,42 +94,27 @@
                   <input id="ar_text" class="form-control" type="text" name="ar_text" formControlName="ar_text">
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="type">Type</label>
-                  <select id="type" class="form-control" name="type" formControlName="type">
-                    <option value="">Select type</option>
-                    <option value="happy">Happy</option>
-                    <option value="case">Case</option>
-                  </select>
+                  <label for="image">Image</label>
+                  <input id="image" (change)="image($event)" class="form-control" type="file" name="image">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="icon">icon</label>
-                  <input id="icon" (change)="logo($event)" class="form-control" type="file" name="icon">
+                  <label for="banner_image">Banner image</label>
+                  <input id="banner_image" (change)="banner_image($event)" class="form-control" type="file" name="banner_image">
                 </div>
               </div>
 
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" [disabled]="createClient.invalid">Save changes</button>
+            <button type="submit" class="btn btn-primary" [disabled]="createCaseStudy.invalid">Save changes</button>
           </div>
         </form>
     </div>
   </div>
 </div>
-<!-- <div class="modal fade" *ngFor="let clientModal of clients" id="updateclient{{clientModal.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create client</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
 
-    </div>
-  </div>
-</div> -->

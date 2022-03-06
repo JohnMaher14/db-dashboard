@@ -68,6 +68,7 @@ export class ServicesComponent implements OnInit {
           this.delete = response.success
           this.error = ''
           this.success = ''
+          this.showServices();
         }
       }
     )
@@ -88,6 +89,7 @@ export class ServicesComponent implements OnInit {
           this.success = response.success
           this.error = ''
           this.delete = ''
+          this.showServices();
           this.createService.reset();
         }else{
 

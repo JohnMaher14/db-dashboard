@@ -6,24 +6,24 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ClientsService {
+export class CasestudyService {
 
   constructor(
     private _HttpClient:HttpClient
   ) { }
-  getClients(): Observable<any>{
-    return this._HttpClient.get(`${environment.apiUrl}clients_index`)
+  getCaseStudy(): Observable<any>{
+    return this._HttpClient.get(`${environment.apiUrl}case_study_index`)
   }
-  getClientDetails(id:number): Observable<any>{
-    return this._HttpClient.get(`${environment.apiUrl}clients_update_data/${id}`)
+  getCaseStudyDetails(id:number): Observable<any>{
+    return this._HttpClient.get(`${environment.apiUrl}caseStudysingledata/${id}`)
   }
-  CreateClient(
+  createCaseStudy(
     en_title: any,
     ar_title: any,
     en_text: any,
     ar_text: any,
-    type: any,
-    logo: File,
+    image: File,
+    banner_image: File,
 
   ):Observable<any>{
     var formData = new FormData();
@@ -31,19 +31,20 @@ export class ClientsService {
     formData.append('ar_title',ar_title);
     formData.append('en_text',en_text);
     formData.append('ar_text',ar_text);
-    formData.append('type',type);
+    formData.append('image',image);
 
-    formData.append('logo',logo);
-    return this._HttpClient.post(`${environment.apiUrl}clients_store` , formData)
+    formData.append('banner_image',banner_image);
+    return this._HttpClient.post(`${environment.apiUrl}case_study_store` , formData)
   }
-  updateClient(
+  updateCaseStudy(
     id:number,
     en_title: any,
     ar_title: any,
     en_text: any,
     ar_text: any,
-    type: any,
-    logo: File,
+    image: File,
+    banner_image: File,
+
 
 
   ):Observable<any>{
@@ -52,12 +53,12 @@ export class ClientsService {
     formData.append('ar_title',ar_title);
     formData.append('en_text',en_text);
     formData.append('ar_text',ar_text);
-    formData.append('type',type);
+    formData.append('image',image);
 
-    formData.append('logo',logo);
-    return this._HttpClient.post(`${environment.apiUrl}clients_update/${id}` , formData)
+    formData.append('banner_image',banner_image);
+    return this._HttpClient.post(`${environment.apiUrl}case_study_update/${id}` , formData)
   }
   deleteClient(id:number , formData:any):Observable<any>{
-    return this._HttpClient.post(`${environment.apiUrl}clients_destroy/${id}` , formData)
+    return this._HttpClient.post(`${environment.apiUrl}case_study_destroy/${id}` , formData)
   }
 }

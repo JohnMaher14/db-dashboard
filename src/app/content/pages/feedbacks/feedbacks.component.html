@@ -1,3 +1,4 @@
+
 <div class="card-content collapse show">
   <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
     <div class="col-lg-9">
@@ -8,41 +9,42 @@
 
     <button data-toggle="modal" [attr.data-target]="'#createClient'" class="btn btn-light w-100">Create {{pageName}}</button>
     </div>
-  </div>  <div class="card-body">
-    <div *ngIf="success" class="alert alert-success" role="alert">
-      {{success}}
-    </div>
-    <div *ngIf="error" class="alert alert-danger" role="alert">
-      {{error}}
-    </div>
-    <div *ngIf="delete" class="alert alert-danger" role="alert">
-      {{delete}}
-    </div>
+  </div>
+  <div class="card-body">
 
     <div class="card-content collapse show">
+      <div *ngIf="success" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+      <div *ngIf="delete" class="alert alert-danger" role="alert">
+        {{delete}}
+      </div>
         <div class="card-body card-dashboard table-responsive">
             <table class="table table-striped table-bordered dom-jQuery-events">
             <thead>
                 <tr>
                     <th>id</th>
+                    <th>Name</th>
+                    <th>Role</th>
                     <th>Image</th>
-                    <th>Title</th>
-                    <th>Type</th>
 
                     <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
 
-                <tr *ngFor="let client of clients">
-                    <td>{{client.id}}</td>
-                    <td><img [src]="clientImage+client.logo" width="100px" alt=""></td>
-                    <td>{{client.en_title}}</td>
-                    <td>{{client.type}}</td>
+                <tr *ngFor="let feedback of feedbacks">
+                  <td>{{feedback.id}}</td>
+                  <td>{{feedback.en_name}}</td>
+                  <td>{{feedback.en_role}}</td>
+                    <td><img [src]="feedbackImage+feedback.image" width="100px" alt=""></td>
 
                     <td class="row justify-content-center no-gutters">
-                      <a routerLink="/clients/{{client?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
-                      <button (click)="onDelete(client.id , clientImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
+                      <a routerLink="/feedbacks/{{feedback?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
+                      <button (click)="onDelete(feedback.id , feedbackImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
                     </td>
                 </tr>
 
@@ -65,55 +67,69 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form [formGroup]="createClient" (ngSubmit)="onCreate()">
+      <form [formGroup]="createFeedback" (ngSubmit)="onCreate()">
           <div class="modal-body">
             <div class="row">
               <div class="col-md-6">
 
                 <div class="form-group">
-                  <label for="en_title">En title</label>
-                  <input id="en_title" class="form-control" type="text" name="en_title" formControlName="en_title">
+                  <label for="en_name">En name</label>
+                  <input id="en_name" class="form-control" type="text" name="en_name" formControlName="en_name">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="ar_title">Ar title</label>
-                  <input id="ar_title" class="form-control" type="text" name="ar_title" formControlName="ar_title">
+                  <label for="ar_name">Ar name</label>
+                  <input id="ar_name" class="form-control" type="text" name="ar_name" formControlName="ar_name">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="en_text">En text</label>
-                  <input id="en_text" class="form-control" type="text" name="en_text" formControlName="en_text">
+                  <label for="en_role">En role</label>
+                  <input id="en_role" class="form-control" type="text" name="en_role" formControlName="en_role">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="ar_text">Ar text</label>
-                  <input id="ar_text" class="form-control" type="text" name="ar_text" formControlName="ar_text">
+                  <label for="ar_role">Ar role</label>
+                  <input id="ar_role" class="form-control" type="text" name="ar_role" formControlName="ar_role">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="type">Type</label>
-                  <select id="type" class="form-control" name="type" formControlName="type">
-                    <option value="">Select type</option>
-                    <option value="happy">Happy</option>
-                    <option value="case">Case</option>
+                  <label for="en_feedback">En feedback</label>
+                  <input id="en_feedback" class="form-control" type="text" name="en_feedback" formControlName="en_feedback">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="ar_feedback">Ar feedback</label>
+                  <input id="ar_feedback" class="form-control" type="text" name="ar_feedback" formControlName="ar_feedback">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <select id="status" class="form-control" type="text" name="status" formControlName="status">
+                    <option value="">Select status</option>
+                    <option value="0">Hide</option>
+                    <option value="1">Show</option>
                   </select>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="icon">icon</label>
-                  <input id="icon" (change)="logo($event)" class="form-control" type="file" name="icon">
+                  <label for="image">Image</label>
+                  <input id="image" (change)="image($event)" class="form-control" type="file" name="image">
                 </div>
               </div>
+
 
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" [disabled]="createClient.invalid">Save changes</button>
+            <button type="submit" class="btn btn-primary" [disabled]="createFeedback.invalid">Save changes</button>
           </div>
         </form>
     </div>

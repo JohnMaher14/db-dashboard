@@ -17,6 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditServiceComponent } from './content/pages/services/edit-service/edit-service.component';
 import { ClientsComponent } from './content/pages/clients/clients.component';
 import { EditClientComponent } from './content/pages/clients/edit-client/edit-client.component';
+import { FeedbacksComponent } from './content/pages/feedbacks/feedbacks.component';
+import { EditFeedbackComponent } from './content/pages/feedbacks/edit-feedback/edit-feedback.component';
+import { BannerImagesComponent } from './content/pages/banner-images/banner-images.component';
+import { CasestudyComponent } from './content/pages/casestudy/casestudy.component';
+import { EditCasestudyComponent } from './content/pages/casestudy/edit-casestudy/edit-casestudy.component';
+import { SlidersComponent } from './content/pages/sliders/sliders.component';
+import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-sliders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +37,14 @@ import { EditClientComponent } from './content/pages/clients/edit-client/edit-cl
     ServicesComponent,
     EditServiceComponent,
     ClientsComponent,
-    EditClientComponent
+    EditClientComponent,
+    FeedbacksComponent,
+    EditFeedbackComponent,
+    BannerImagesComponent,
+    CasestudyComponent,
+    EditCasestudyComponent,
+    SlidersComponent,
+    EditSlidersComponent
   ],
   imports: [
     BrowserModule,

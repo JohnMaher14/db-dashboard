@@ -8,7 +8,7 @@ import { ClientsService } from 'src/app/services/clients.service';
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit {
-
+  pageName: string = 'Clients'
   success: string = '';
   error: string = '';
   delete: string = '';
@@ -54,6 +54,7 @@ export class ClientsComponent implements OnInit {
           this.delete = response.success
           this.error = ''
           this.success = ''
+          this.showClients()
         }
       }
     )
@@ -72,6 +73,7 @@ export class ClientsComponent implements OnInit {
           this.success = response.success
           this.error = ''
           this.delete = ''
+          this.showClients()
           this.createClient.reset();
         }else{
 

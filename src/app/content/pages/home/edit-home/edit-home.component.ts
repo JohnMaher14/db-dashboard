@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class EditHomeComponent implements OnInit {
   homeData:any;
   constructor(
     private _HomeService:HomeService,
-    private _FormBuilder:FormBuilder
+    private _FormBuilder:FormBuilder,
+    private _Router:Router
   ) {
     this.homeEdit = this._FormBuilder.group({
       en_about_home_title: [''],
@@ -99,6 +101,9 @@ export class EditHomeComponent implements OnInit {
     ).subscribe(
       (response) => {
             this.success = response.body.success
+            setTimeout(() => {
+              this._Router.navigate(['/home']);
+            }, 3000);
       }, error => {
           this.error = error.error.error
           console.log(error);

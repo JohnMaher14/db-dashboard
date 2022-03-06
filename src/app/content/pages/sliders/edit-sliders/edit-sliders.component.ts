@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ClientsService } from 'src/app/services/clients.service';
+import { SliderService } from 'src/app/services/slider.service';
 
 @Component({
-  selector: 'app-edit-client',
-  templateUrl: './edit-client.component.html',
-  styleUrls: ['./edit-client.component.scss']
+  selector: 'app-edit-sliders',
+  templateUrl: './edit-sliders.component.html',
+  styleUrls: ['./edit-sliders.component.scss']
 })
-export class EditClientComponent implements OnInit {
+export class EditSlidersComponent implements OnInit {
+
+
   success: any = '';
   error: any = '';
   modal: any;
-  client:any;
+  slider:any;
   indexForNumbers: any;
-  clientImage ='https://digitalbondmena.com/clients/'
+  sliderImage ='https://digitalbondmena.com/sliders/'
 
   constructor(
-    private _ClientsService:ClientsService,
+    private _SliderService:SliderService,
     private _ActivatedRoute:ActivatedRoute,
     private _Router:Router
   ) { }
@@ -28,47 +30,45 @@ export class EditClientComponent implements OnInit {
   getDetails(){
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
 
-    this._ClientsService.getClientDetails(this.indexForNumbers).subscribe(
+    this._SliderService.getSliderDetails(this.indexForNumbers).subscribe(
       (response) => {
-        this.client = response.client
+        this.slider = response.row
       }
     )
   }
-  updateClients = new FormGroup({
+  updateSlider = new FormGroup({
     en_title : new FormControl('', Validators.required),
     ar_title : new FormControl('', Validators.required),
     en_text : new FormControl('', Validators.required),
     ar_text : new FormControl('', Validators.required),
-    type : new FormControl('', Validators.required),
-    logo : new FormControl(null),
+    image : new FormControl(null),
 })
-  logo(event:any){
+  image(event:any){
     const file = event.target.files ? event.target.files[0] : '';
-    this.updateClients.patchValue({
-      logo: file
+    this.updateSlider.patchValue({
+      image: file
     })
-    this.updateClients.get('logo')?.updateValueAndValidity()
+    this.updateSlider.get('image')?.updateValueAndValidity()
   }
 
 
 
-  onUpdate(){
-    this._ClientsService.updateClient(
-      this.indexForNumbers,
-      this.updateClients.value.en_title,
-      this.updateClients.value.ar_title,
-      this.updateClients.value.en_text,
-      this.updateClients.value.ar_text,
-      this.updateClients.value.type,
-      this.updateClients.value.logo
 
+  onUpdate(){
+    this._SliderService.updateSlider(
+      this.indexForNumbers,
+      this.updateSlider.value.en_title,
+      this.updateSlider.value.ar_title,
+      this.updateSlider.value.en_text,
+      this.updateSlider.value.ar_text,
+      this.updateSlider.value.image,
     ).subscribe(
       (response) =>{
         if(response.success){
           this.success = response.success
           this.error = ''
           setTimeout(() => {
-            this._Router.navigate(['/clients']);
+            this._Router.navigate(['/sliders']);
           }, 3000);
         }
       }
@@ -79,4 +79,5 @@ export class EditClientComponent implements OnInit {
       }
     )
   }
+
 }

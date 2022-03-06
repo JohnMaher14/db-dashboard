@@ -1,0 +1,98 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FeedbacksService } from 'src/app/services/feedbacks.service';
+
+@Component({
+  selector: 'app-feedbacks',
+  templateUrl: './feedbacks.component.html',
+  styleUrls: ['./feedbacks.component.scss']
+})
+export class FeedbacksComponent implements OnInit {
+  pageName:string='Feedbacks'
+  feedbacks: any[] =[];
+  success: string ='';
+  error: string ='';
+  delete: string ='';
+  feedbackImage ='https://digitalbondmena.com/feedbacks/'
+  constructor(
+    private _FeedbacksService:FeedbacksService
+  ) { }
+
+
+  showFeedbacks(){
+    this._FeedbacksService.getFeedbacks().subscribe(
+      (response) => {
+        this.feedbacks = response.rows
+        console.log(response.rows);
+      }
+    )
+  }
+  // en_name :
+  // ar_name :
+  // en_role :
+  // ar_role :
+  // en_feedback :
+  // ar_feedback :
+  // status :
+  // image
+  createFeedback = new FormGroup({
+    en_name : new FormControl('', Validators.required),
+    ar_name : new FormControl('', Validators.required),
+    en_role : new FormControl('', Validators.required),
+    ar_role : new FormControl('', Validators.required),
+    en_feedback : new FormControl('', Validators.required),
+    ar_feedback : new FormControl('', Validators.required),
+    status : new FormControl('', Validators.required),
+    image : new FormControl(null, Validators.required),
+  })
+
+  image(event:any){
+    const file = event.target.files ? event.target.files[0] : '';
+    this.createFeedback.patchValue({
+      image: file
+    })
+    this.createFeedback.get('image')?.updateValueAndValidity()
+  }
+
+  onDelete(id:number , data:any){
+    this._FeedbacksService.deleteFeedback(id,data ).subscribe(
+      (response) => {
+        if (response.success) {
+          this.delete = response.success
+          this.error = ''
+          this.success = ''
+          this.showFeedbacks();
+
+        }
+      }
+    )
+  }
+  onCreate(){
+    this._FeedbacksService.CreateFeedback(
+      this.createFeedback.value.en_name,
+      this.createFeedback.value.ar_name,
+      this.createFeedback.value.en_role,
+      this.createFeedback.value.ar_role,
+      this.createFeedback.value.en_feedback,
+      this.createFeedback.value.ar_feedback,
+      this.createFeedback.value.status,
+      this.createFeedback.value.image,
+    ).subscribe(
+      (response) =>{
+        if(response.success){
+          this.success = response.success
+          this.error = ''
+          this.delete = ''
+          this.showFeedbacks();
+          this.createFeedback.reset();
+        }else{
+
+          console.log(response);
+        }
+      }
+    )
+  }
+  ngOnInit(): void {
+    this.showFeedbacks()
+  }
+}
