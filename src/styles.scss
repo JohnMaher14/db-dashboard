@@ -41,6 +41,7 @@ $db-dashboard-theme: mat.define-light-theme((
 /* Importing Datepicker SCSS file. */
 // @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 $mainColor: #290707;
+$secondaryColor: #ed2924;
 .main-menu.menu-light .navigation>li.active>a{
   border-right: 4px solid $mainColor;
 
@@ -57,16 +58,18 @@ $mainColor: #290707;
   background-color: $mainColor !important
 }
 .navbar{
-  padding:5px 0;
-  &-brand{
-  padding:0 !important;
-  img{
-    width: 95px !important
-  }
-}
+
 }
 .navigation{
   &-main{
     margin-top:18px !important
   }
+}
+.table td,
+.table th{
+  vertical-align: middle;
+}
+.main-menu.menu-light .navigation>li.active>a{
+  background-color: rgba($secondaryColor,0.4) ;
+  color:#040404;
 }

@@ -40,7 +40,7 @@
                   <td>{{feedback.id}}</td>
                   <td>{{feedback.en_name}}</td>
                   <td>{{feedback.en_role}}</td>
-                    <td><img [src]="feedbackImage+feedback.image" width="100px" alt=""></td>
+                  <td><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
 
                     <td class="row justify-content-center no-gutters">
                       <a routerLink="/feedbacks/{{feedback?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
@@ -132,6 +132,26 @@
             <button type="submit" class="btn btn-primary" [disabled]="createFeedback.invalid">Save changes</button>
           </div>
         </form>
+    </div>
+  </div>
+</div>
+<div *ngFor="let feedbackGallery of feedbacks" class="modal fade" id="feedbackGallery{{feedbackGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mb-0" id="exampleModalLabel">{{feedbackGallery.en_name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <img [src]="feedbackImage+feedbackGallery.image" class="w-100" alt="">      </div>
+
+          </div>
+        </div>
+
     </div>
   </div>
 </div>

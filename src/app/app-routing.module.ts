@@ -14,6 +14,8 @@ import { CasestudyComponent } from './content/pages/casestudy/casestudy.componen
 import { EditCasestudyComponent } from './content/pages/casestudy/edit-casestudy/edit-casestudy.component';
 import { SlidersComponent } from './content/pages/sliders/sliders.component';
 import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-sliders.component';
+import { BannerImagesComponent } from './content/pages/banner-images/banner-images.component';
+import { EditBannersComponent } from './content/pages/banner-images/edit-banners/edit-banners.component';
 
 const routes: Routes = [
 
@@ -32,6 +34,8 @@ const routes: Routes = [
   {path: 'case-studies/:id', component:EditCasestudyComponent},
   {path: 'sliders', component:SlidersComponent},
   {path: 'sliders/:id', component:EditSlidersComponent},
+  {path: 'banners', component:BannerImagesComponent},
+  {path: 'banners/edit/:id', component:EditBannersComponent},
 ];
 
 @NgModule({

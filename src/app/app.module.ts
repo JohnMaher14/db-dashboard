@@ -24,6 +24,7 @@ import { CasestudyComponent } from './content/pages/casestudy/casestudy.componen
 import { EditCasestudyComponent } from './content/pages/casestudy/edit-casestudy/edit-casestudy.component';
 import { SlidersComponent } from './content/pages/sliders/sliders.component';
 import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-sliders.component';
+import { EditBannersComponent } from './content/pages/banner-images/edit-banners/edit-banners.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-
     CasestudyComponent,
     EditCasestudyComponent,
     SlidersComponent,
-    EditSlidersComponent
+    EditSlidersComponent,
+    EditBannersComponent
   ],
   imports: [
     BrowserModule,

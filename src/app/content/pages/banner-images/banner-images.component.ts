@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from 'src/app/services/home.service';
 
 @Component({
   selector: 'app-banner-images',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BannerImagesComponent implements OnInit {
 
-  constructor() { }
+  banners:any;
+  bannerUrl: string ='https://digitalbondmena.com/banner_images/';
+  constructor(
+    private _HomeService:HomeService
+  ) { }
 
   ngOnInit(): void {
+    this.showBanners()
+  }
+  showBanners(){
+    this._HomeService.getBannerImage().subscribe(
+      (response) => {
+        this.banners = response.rows
+      }
+    )
   }
 
 }

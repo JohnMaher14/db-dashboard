@@ -25,9 +25,9 @@
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>Image</th>
                     <th>Title</th>
                     <th>Type</th>
+                    <th>Image</th>
 
                     <th>&nbsp;</th>
                 </tr>
@@ -36,9 +36,9 @@
 
                 <tr *ngFor="let client of clients">
                     <td>{{client.id}}</td>
-                    <td><img [src]="clientImage+client.logo" width="100px" alt=""></td>
                     <td>{{client.en_title}}</td>
                     <td>{{client.type}}</td>
+                    <td><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#clientGallery'+client.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
 
                     <td class="row justify-content-center no-gutters">
                       <a routerLink="/clients/{{client?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
@@ -116,6 +116,29 @@
             <button type="submit" class="btn btn-primary" [disabled]="createClient.invalid">Save changes</button>
           </div>
         </form>
+    </div>
+  </div>
+</div>
+<div *ngFor="let clientGallery of clients" class="modal fade" id="clientGallery{{clientGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mb-0" id="exampleModalLabel">{{clientGallery.en_title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <img [src]="clientImage+clientGallery.logo" class="w-100" alt="">      </div>
+
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>
