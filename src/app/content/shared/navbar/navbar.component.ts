@@ -11,5 +11,17 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  GoFullScreen(){
 
+    let elem:any = document.documentElement;
+    let methodToBeInvoked = elem.requestFullscreen ||
+    elem.webkitRequestFullScreen || elem['mozRequestFullscreen']
+    ||
+    elem['msRequestFullscreen'];
+    if (methodToBeInvoked){
+      methodToBeInvoked.call(elem)
+    }else{
+      return elem;
+    }
+  }
 }

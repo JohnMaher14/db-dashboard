@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CasestudyService } from 'src/app/services/casestudy.service';
+
 @Component({
-  selector: 'app-edit-casestudy',
-  templateUrl: './edit-casestudy.component.html',
-  styleUrls: ['./edit-casestudy.component.scss']
+  selector: 'app-edit-case-study-modal-gallery',
+  templateUrl: './edit-case-study-modal-gallery.component.html',
+  styleUrls: ['./edit-case-study-modal-gallery.component.scss']
 })
-export class EditCasestudyComponent implements OnInit {
+export class EditCaseStudyModalGalleryComponent implements OnInit {
 
   success: any = '';
   error: any = '';
   modal: any;
-  caseStudy:any;
+  caseStudyModelImages:any;
   indexForNumbers: any;
   caseStudyImage ='https://digitalbondmena.com/case-study/'
 
@@ -28,53 +29,42 @@ export class EditCasestudyComponent implements OnInit {
   getDetails(){
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
 
-    this._CasestudyService.getCaseStudyDetails(this.indexForNumbers).subscribe(
+    this._CasestudyService.getCaseStudyModelImageSingledata(this.indexForNumbers).subscribe(
       (response) => {
-        this.caseStudy = response.caseStudyData[0]
+        this.caseStudyModelImages = response.row
       }
     )
   }
-  updateCaseStudy = new FormGroup({
+  updateCaseStudyImage = new FormGroup({
     en_title : new FormControl('', Validators.required),
     ar_title : new FormControl('', Validators.required),
-    en_text : new FormControl('', Validators.required),
-    ar_text : new FormControl('', Validators.required),
+
     image : new FormControl(null),
-    banner_image : new FormControl(null)
 })
   image(event:any){
     const file = event.target.files ? event.target.files[0] : '';
-    this.updateCaseStudy.patchValue({
+    this.updateCaseStudyImage.patchValue({
       image: file
     })
-    this.updateCaseStudy.get('image')?.updateValueAndValidity()
+    this.updateCaseStudyImage.get('image')?.updateValueAndValidity()
   }
-  banner_image(event:any){
-    const file = event.target.files ? event.target.files[0] : '';
-    this.updateCaseStudy.patchValue({
-      banner_image: file
-    })
-    this.updateCaseStudy.get('banner_image')?.updateValueAndValidity()
-  }
+
 
 
 
   onUpdate(){
-    this._CasestudyService.updateCaseStudy(
+    this._CasestudyService.updateCaseStudyModelImage(
       this.indexForNumbers,
-      this.updateCaseStudy.value.en_title,
-      this.updateCaseStudy.value.ar_title,
-      this.updateCaseStudy.value.en_text,
-      this.updateCaseStudy.value.ar_text,
-      this.updateCaseStudy.value.image,
-      this.updateCaseStudy.value.banner_image,
+      this.updateCaseStudyImage.value.en_title,
+      this.updateCaseStudyImage.value.ar_title,
+      this.updateCaseStudyImage.value.image,
     ).subscribe(
       (response) =>{
         if(response.success){
           this.success = response.success
           this.error = ''
           setTimeout(() => {
-            this._Router.navigate(['/case-study-model']);
+            this._Router.navigate(['/case-studies']);
           }, 3000);
         }
       }

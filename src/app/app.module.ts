@@ -25,6 +25,14 @@ import { EditCasestudyComponent } from './content/pages/casestudy/edit-casestudy
 import { SlidersComponent } from './content/pages/sliders/sliders.component';
 import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-sliders.component';
 import { EditBannersComponent } from './content/pages/banner-images/edit-banners/edit-banners.component';
+import { MatDialogModule } from "@angular/material/dialog";
+import { CarouselModule } from "ngx-owl-carousel-o";
+import { HomeDashboardComponent } from './content/pages/home-dashboard/home-dashboard.component';
+import { ModalModule } from "ngx-bootstrap/modal";
+import { CaseStudyModelsComponent } from './content/pages/case-study-models/case-study-models.component';
+import { EditCaseStudyModelComponent } from './content/pages/case-study-models/edit-case-study-model/edit-case-study-model.component';
+import { CaseStudyModelGalleryComponent } from './content/pages/case-study-model-gallery/case-study-model-gallery.component';
+import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-model-gallery/edit-case-study-modal-gallery/edit-case-study-modal-gallery.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +54,12 @@ import { EditBannersComponent } from './content/pages/banner-images/edit-banners
     EditCasestudyComponent,
     SlidersComponent,
     EditSlidersComponent,
-    EditBannersComponent
+    EditBannersComponent,
+    HomeDashboardComponent,
+    CaseStudyModelsComponent,
+    EditCaseStudyModelComponent,
+    CaseStudyModelGalleryComponent,
+    EditCaseStudyModalGalleryComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +67,10 @@ import { EditBannersComponent } from './content/pages/banner-images/edit-banners
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule,
+    CarouselModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

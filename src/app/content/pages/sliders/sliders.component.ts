@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SliderService } from 'src/app/services/slider.service';
 
 @Component({
@@ -15,17 +16,21 @@ export class SlidersComponent implements OnInit {
   error: string = '';
   delete: string = '';
   sliders: any[] =[];
-
+  modalRef!:BsModalRef;
   sliderImage ='https://digitalbondmena.com/sliders/'
   constructor(
     private _SliderService:SliderService,
-    private _Router:Router
+    private _Router:Router,
+    private _BsModalService:BsModalService
   ) { }
 
   ngOnInit(): void {
     this.showSliders()
   }
+  openModal(template:any){
 
+    this.modalRef = this._BsModalService.show(template);
+  }
   sliderForm = new FormGroup({
     en_title : new FormControl('', Validators.required),
     ar_title : new FormControl('', Validators.required),
@@ -75,6 +80,7 @@ export class SlidersComponent implements OnInit {
           this.success = response.success
           this.error = ''
           this.delete = ''
+          this.modalRef.hide()
           // this._Router.navigate(['/sliders'])\
           this.showSliders()
           this.sliderForm.reset();

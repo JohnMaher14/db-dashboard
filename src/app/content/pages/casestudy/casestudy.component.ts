@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CasestudyService } from 'src/app/services/casestudy.service';
 
 @Component({
@@ -13,10 +14,11 @@ export class CasestudyComponent implements OnInit {
   error: string = '';
   delete: string = '';
   caseStudies: any[] =[];
-
+  modalRef!:BsModalRef;
   caseStudyImage ='https://digitalbondmena.com/case-study/'
   constructor(
-    private _CasestudyService:CasestudyService
+    private _CasestudyService:CasestudyService,
+    private _BsModalService:BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +48,10 @@ export class CasestudyComponent implements OnInit {
     })
     this.createCaseStudy.get('banner_image')?.updateValueAndValidity()
   }
+  openModal(template:any){
 
+    this.modalRef = this._BsModalService.show(template);
+  }
   showCaseStudy(){
     this._CasestudyService.getCaseStudy().subscribe(
       (response) => {
@@ -81,7 +86,8 @@ export class CasestudyComponent implements OnInit {
           this.success = response.success
           this.error = ''
           this.delete = ''
-          this.showCaseStudy()
+          this.showCaseStudy();
+          this.modalRef.hide()
           this.createCaseStudy.reset();
         }else{
 

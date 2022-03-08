@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { BsModalService , BsModalRef} from 'ngx-bootstrap/modal';
 import { ClientsService } from 'src/app/services/clients.service';
 
 @Component({
@@ -13,11 +15,14 @@ export class ClientsComponent implements OnInit {
   error: string = '';
   delete: string = '';
   clients: any[] =[];
+  modalRef!: BsModalRef;
 
   clientImage ='https://digitalbondmena.com/clients/'
   constructor(
-    private _ClientsService:ClientsService
-  ) { }
+    private _ClientsService:ClientsService,
+    public _MatDialog:MatDialog,
+
+    public modalService: BsModalService  ) { }
 
   ngOnInit(): void {
     this.showClients()
@@ -39,7 +44,9 @@ export class ClientsComponent implements OnInit {
     })
     this.createClient.get('logo')?.updateValueAndValidity()
   }
-
+  openModal(template: any) {
+    this.modalRef = this.modalService.show(template);
+  }
   showClients(){
     this._ClientsService.getClients().subscribe(
       (response) => {
@@ -47,6 +54,7 @@ export class ClientsComponent implements OnInit {
       }
     )
   }
+
   onDelete(id:number , data:any){
     this._ClientsService.deleteClient(id,data ).subscribe(
       (response) => {
@@ -74,6 +82,7 @@ export class ClientsComponent implements OnInit {
           this.error = ''
           this.delete = ''
           this.showClients()
+          this.modalRef.hide()
           this.createClient.reset();
         }else{
 

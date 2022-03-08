@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HomeService } from 'src/app/services/home.service';
 
 @Component({
@@ -24,5 +25,24 @@ export class BannerImagesComponent implements OnInit {
       }
     )
   }
+  mainSlider: OwlOptions = {
+    loop: true,
+    dots: false,
+    autoplay: false,
+    navSpeed: 700,
+    nav: false,
 
+    responsive: {
+      0: {
+        items: 1
+      },
+      450: {
+        items: 1
+      },
+
+      1024: {
+        items: 1
+      }
+    }
+  }
 }

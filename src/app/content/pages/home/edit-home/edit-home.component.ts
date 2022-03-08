@@ -102,7 +102,7 @@ export class EditHomeComponent implements OnInit {
       (response) => {
             this.success = response.body.success
             setTimeout(() => {
-              this._Router.navigate(['/home']);
+              this._Router.navigate(['/home-page']);
             }, 3000);
       }, error => {
           this.error = error.error.error

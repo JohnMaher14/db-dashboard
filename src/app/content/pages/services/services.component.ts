@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators , FormControl } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
@@ -12,13 +13,18 @@ export class ServicesComponent implements OnInit {
   error: string = '';
   delete: string = '';
   services: any[] =[];
+  modalRef!:BsModalRef;
+  pageName: string ='Services';
   @ViewChild('createModal') modal!: ElementRef;
 
   serviceImage ='https://digitalbondmena.com/services/'
   constructor(
-    private _ServiceService:ServiceService
+    private _ServiceService:ServiceService,
+    private modalService:BsModalService
   ) { }
-
+  openModal(template: any) {
+    this.modalRef = this.modalService.show(template);
+  }
   ngOnInit(): void {
     this.showServices()
   }
@@ -89,6 +95,7 @@ export class ServicesComponent implements OnInit {
           this.success = response.success
           this.error = ''
           this.delete = ''
+          this.modalRef.hide()
           this.showServices();
           this.createService.reset();
         }else{

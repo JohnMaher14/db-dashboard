@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FeedbacksService } from 'src/app/services/feedbacks.service';
 
 @Component({
@@ -13,11 +14,18 @@ export class FeedbacksComponent implements OnInit {
   success: string ='';
   error: string ='';
   delete: string ='';
+    modalRef!:BsModalRef;
+
   feedbackImage ='https://digitalbondmena.com/feedbacks/'
   constructor(
-    private _FeedbacksService:FeedbacksService
-  ) { }
+    private _FeedbacksService:FeedbacksService,
+        private modalService:BsModalService
 
+  ) { }
+    openModal(template:any){
+
+      this.modalRef = this.modalService.show(template);
+    }
 
   showFeedbacks(){
     this._FeedbacksService.getFeedbacks().subscribe(
@@ -84,6 +92,7 @@ export class FeedbacksComponent implements OnInit {
           this.error = ''
           this.delete = ''
           this.showFeedbacks();
+          this.modalRef.hide()
           this.createFeedback.reset();
         }else{
 
