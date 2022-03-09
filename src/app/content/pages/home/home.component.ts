@@ -9,7 +9,12 @@ import { HomeService } from 'src/app/services/home.service';
 })
 export class HomeComponent implements OnInit {
   home:any;
-  imageUrl='https://digitalbondmena.com/home_page/'
+  imageUrl='https://digitalbondmena.com/home_page/';
+  fullscreed: boolean = false;
+  loading: boolean = false;
+  fullScreen(){
+    this.fullscreed = !this.fullscreed;
+  }
   constructor(
     private _HomeService:HomeService
   ) { }
@@ -18,9 +23,12 @@ export class HomeComponent implements OnInit {
     this.showHome()
   }
   showHome(){
+    this.loading = true
     this._HomeService.getHome().subscribe(
       (response) => {
         this.home = response.rows
+        this.loading = false
+
       }
     )
   }

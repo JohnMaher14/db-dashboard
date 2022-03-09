@@ -215,27 +215,48 @@
           >
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group bmd-form-group is-filled">
-                  <label class="bmd-label-floating">about_banner_image</label>
-                  <input
-                  (change)="onChangeFile1($event)"
-                    type="file"
-                    class="form-control"
-                    id="about_banner_image"
 
-                  />
+                <div class="form-group bmd-form-group is-filled">
+                  <div class="row align-items-end">
+                    <div class="col-md-9">
+                      <label class="bmd-label-floating">About banner image</label>
+                      <input
+                      (change)="onChangeFile1($event)"
+                        type="file"
+                        class="form-control"
+                        id="about_banner_image"
+
+                      />
+
+                    </div>
+                    <div class="col-md-3">
+                      <img [src]="aboutLink+aboutUsData.about_banner_image" class="w-100" alt="">
+                    </div>
+                  </div>
+
                 </div>
+
               </div>
               <div class="col-md-6">
                 <div class="form-group bmd-form-group is-filled">
-                  <label class="bmd-label-floating">about_section_image</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="about_section_image"
-                    (change)="onChangeFile2($event)"
+                  <div class="row align-items-end">
+                    <div class="col-md-9">
+                      <label class="bmd-label-floating">About section image</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="about_section_image"
+                        (change)="onChangeFile2($event)"
 
-                  />
+                      />
+
+                    </div>
+                    <div class="col-md-3">
+                      <img [src]="aboutLink+aboutUsData.about_section_image" class="w-100" alt="">
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
               <div class="col-md-6">
@@ -395,7 +416,9 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group bmd-form-group is-filled">
-                  <label class="bmd-label-floating">mission_vision_image</label>
+                  <div class="row align-items-end">
+                    <div class="col-md-9">
+                      <label class="bmd-label-floating">Mission vision image</label>
                   <input
                     type="file"
                     class="form-control"
@@ -403,12 +426,19 @@
                     (change)="onChangeFile3($event)"
 
                   />
+
+                    </div>
+                    <div class="col-md-3">
+                      <img [src]="aboutLink+aboutUsData.mission_vision_image" class="w-100" alt="">
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
             <div class="row no-gutters justify-content-end">
               <button class="btn btn-primary" [disabled]="aboutusEdit.invalid">
-                Edit
+                Edit about us
               </button>
             </div>
           </form>

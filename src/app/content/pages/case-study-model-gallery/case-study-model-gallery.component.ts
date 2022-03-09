@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CasestudyService } from 'src/app/services/casestudy.service';
 
 @Component({
@@ -14,18 +15,28 @@ export class CaseStudyModelGalleryComponent implements OnInit {
   indexForNumbers!:number;
   indexCaseStudyId!:number;
   caseStudyImage:string='https://digitalbondmena.com/case_study_model_image/';
+  modalRef!:BsModalRef;
 
   success: string = '';
   error: string = '';
   delete: string = '';
+  fullscreed: boolean = false;
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   constructor(
     private _ActivatedRoute:ActivatedRoute,
-    private _CasestudyService:CasestudyService
+    private _CasestudyService:CasestudyService,
+        private _BsModalService:BsModalService
+
   ) {
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
 
   }
+  openModal(template:any){
 
+    this.modalRef = this._BsModalService.show(template);
+  }
   ngOnInit(): void {
     this.showCaseStudyModelImage()
   }
@@ -77,10 +88,11 @@ export class CaseStudyModelGalleryComponent implements OnInit {
     ).subscribe(
       (response) =>{
         if(response.success){
-          this.success = response.success
-          this.error = ''
-          this.delete = ''
-          this.showCaseStudyModelImage()
+          this.success = response.success;
+          this.error = '';
+          this.delete = '';
+          this.showCaseStudyModelImage();
+          this.modalRef.hide();
           this.createCaseStudyModelImage.reset();
         }else{
 

@@ -26,6 +26,7 @@ import { SlidersComponent } from './content/pages/sliders/sliders.component';
 import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-sliders.component';
 import { EditBannersComponent } from './content/pages/banner-images/edit-banners/edit-banners.component';
 import { MatDialogModule } from "@angular/material/dialog";
+import { PaginationModule } from "ngx-bootstrap/pagination";
 import { CarouselModule } from "ngx-owl-carousel-o";
 import { HomeDashboardComponent } from './content/pages/home-dashboard/home-dashboard.component';
 import { ModalModule } from "ngx-bootstrap/modal";
@@ -33,6 +34,9 @@ import { CaseStudyModelsComponent } from './content/pages/case-study-models/case
 import { EditCaseStudyModelComponent } from './content/pages/case-study-models/edit-case-study-model/edit-case-study-model.component';
 import { CaseStudyModelGalleryComponent } from './content/pages/case-study-model-gallery/case-study-model-gallery.component';
 import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-model-gallery/edit-case-study-modal-gallery/edit-case-study-modal-gallery.component';
+import { LoaderActionComponent } from './content/shared/loader-action/loader-action.component';
+import { LoadingComponent } from './content/shared/loading/loading.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +63,9 @@ import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-m
     CaseStudyModelsComponent,
     EditCaseStudyModelComponent,
     CaseStudyModelGalleryComponent,
-    EditCaseStudyModalGalleryComponent
+    EditCaseStudyModalGalleryComponent,
+    LoaderActionComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +76,9 @@ import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-m
     BrowserAnimationsModule,
     MatDialogModule,
     CarouselModule,
+    PaginationModule.forRoot(),
     ModalModule.forRoot()
+
   ],
   providers: [],
   bootstrap: [AppComponent]

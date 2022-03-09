@@ -12,6 +12,7 @@ export class HomeDashboardComponent implements OnInit {
   caseStudyStatistics!:number;
   clientsStatistics!:number;
   feedbacksStatistics!:number;
+  loading: boolean = false;
   constructor(
     private _ClientsService:ClientsService,
     private _FeedbacksService:FeedbacksService,
@@ -19,11 +20,11 @@ export class HomeDashboardComponent implements OnInit {
   ) { }
 
   showClientsLength(){
+    this.loading = true
     this._ClientsService.getClients().subscribe(
       (response) => {
         this.clientsStatistics = response.rows.length
-        console.log(response.rows.length);
-        console.log(this.clientsStatistics);
+        this.loading = false
       }
     )
   }

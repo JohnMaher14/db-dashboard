@@ -8,14 +8,14 @@
         {{success}}
       </div>
       <form [formGroup]="updateFeedback" (ngSubmit)="onUpdate()">
-        <div class="modal-body">
-          <div class="row">
+          <div class="row justify-content-end">
             <div class="col-md-6">
 
               <div class="form-group">
                 <label for="en_name">En name</label>
                 <input id="en_name" class="form-control" type="text" name="en_name" formControlName="en_name" [(ngModel)]="feedback.en_name">
               </div>
+
             </div>
             <div class="col-md-6">
               <div class="form-group">
@@ -69,15 +69,14 @@
 
                 </div>
                 <div class="col-lg-2">
-                  <img height="50px" [src]="feedbackImage+feedback.image" alt="">
+                  <img class="w-100" [src]="feedbackImage+feedback.image" alt="">
                 </div>
               </div>
             </div>
 
 
+            <button type="submit" class="btn btn-primary text-right" [disabled]="updateFeedback.invalid">Update feedback</button>
           </div>
-        </div>
-          <button type="submit" class="btn btn-primary" [disabled]="updateFeedback.invalid">Save changes</button>
       </form>
     </div>
   </div>

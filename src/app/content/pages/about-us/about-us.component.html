@@ -1,7 +1,21 @@
-<div class="card">
+
+
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
 
   <div class="card-content collapse show">
-    <div class="card-header bg-primary bg-darken-2 white text-center card-title-bold text-capitalize">About us </div>
+    <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
+      <div class="col-lg-9">
+        <h3 class="mb-0 text-left">{{ 'About us page' }}</h3>
+      </div>
+      <div class="col-lg-3 text-right">
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-minimize"></i></button>
+
+      </div>
+    </div>
     <div class="card-body">
 
       <div class="card-content collapse show">
@@ -11,12 +25,12 @@
               <thead>
                   <tr>
                       <th>id</th>
-                      <!-- <th>Section Banner image</th> -->
+                      <th *ngIf="fullscreed">Section Banner image</th>
                       <th>Section title</th>
-                      <!-- <th>Section image</th> -->
+                      <th *ngIf="fullscreed">Section image</th>
                       <th>Mission Title</th>
                       <th>Vision Title</th>
-                      <!-- <th>Vision and mission image</th> -->
+                      <th *ngIf="fullscreed">Vision and mission image</th>
 
                       <th>&nbsp;</th>
                   </tr>
@@ -25,12 +39,12 @@
 
                   <tr>
                       <td>1</td>
-                      <!-- <td><img [src]="aboutUsImage+AboutUs?.about_banner_image" height="100px" alt=""></td> -->
+                      <td *ngIf="fullscreed"><img [src]="aboutUsImage+AboutUs?.about_banner_image" height="40px" width="60px" alt=""></td>
                       <td>{{AboutUs?.en_about_section_title}}</td>
-                      <!-- <td><img [src]="aboutUsImage+AboutUs?.about_section_image" height="100px" alt=""></td> -->
+                      <td *ngIf="fullscreed"><img [src]="aboutUsImage+AboutUs?.about_section_image" height="40px" width="60px" alt=""></td>
                       <td>{{AboutUs?.en_mission_title}}</td>
                       <td>{{AboutUs?.en_vision_title}}</td>
-                      <!-- <td><img [src]="aboutUsImage+AboutUs?.mission_vision_image" height="100px" alt=""></td> -->
+                      <td *ngIf="fullscreed"><img [src]="aboutUsImage+AboutUs?.mission_vision_image" height="40px" width="60px" alt=""></td>
 
                       <td class="row justify-content-center no-gutters">
                           <a routerLink="/about-us/edit/{{AboutUs?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
@@ -42,37 +56,7 @@
               </tbody>
 
               </table>
-              <section class="slider">
-                <h4>All images</h4>
 
-                <owl-carousel-o [options]="mainSlider">
-                  <ng-container>
-                    <ng-template carouselSlide>
-
-                      <div class="item text-center">
-                          <img  [src]="aboutUsImage+AboutUs?.about_banner_image" class="main_slider_img" alt="">
-                      </div>
-                    </ng-template>
-                  </ng-container>
-                  <ng-container>
-                    <ng-template carouselSlide>
-
-                      <div class="item text-center">
-                        <img  [src]="aboutUsImage+AboutUs?.about_section_image" class="main_slider_img" alt="">
-                      </div>
-                    </ng-template>
-                  </ng-container>
-                  <ng-container>
-                    <ng-template carouselSlide>
-
-                      <div class="item text-center">
-                        <img  [src]="aboutUsImage+AboutUs?.mission_vision_image" class="main_slider_img" alt="">
-                      </div>
-                    </ng-template>
-                  </ng-container>
-
-                </owl-carousel-o>
-              </section>
           </div>
 
     </div>

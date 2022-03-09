@@ -17,7 +17,15 @@ export class SlidersComponent implements OnInit {
   delete: string = '';
   sliders: any[] =[];
   modalRef!:BsModalRef;
-  sliderImage ='https://digitalbondmena.com/sliders/'
+  sliderImage ='https://digitalbondmena.com/sliders/';
+  fullscreed: boolean = false;
+  loading: boolean = false;
+
+    loadingAction: boolean = false;
+
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   constructor(
     private _SliderService:SliderService,
     private _Router:Router,
@@ -49,25 +57,33 @@ export class SlidersComponent implements OnInit {
 
 
   showSliders(){
+    this.loading = true
     this._SliderService.getSlider().subscribe(
       (response) => {
         this.sliders = response.rows
+        this.loading = false
       }
     )
   }
   onDelete(id:number , data:any){
+    this.loadingAction = true
+
     this._SliderService.deleteSlider(id,data ).subscribe(
       (response) => {
         if (response.success) {
-          this.delete = response.success
-          this.error = ''
-          this.success = ''
+          this.delete = response.success;
+          this.error = '';
+          this.success = '';
+          this.loadingAction = false;
+
           this.showSliders();
         }
       }
     )
   }
   onCreate(){
+    this.loadingAction = true
+
     this._SliderService.createSlider(
       this.sliderForm.value.en_title,
       this.sliderForm.value.ar_title,
@@ -81,8 +97,9 @@ export class SlidersComponent implements OnInit {
           this.error = ''
           this.delete = ''
           this.modalRef.hide()
-          // this._Router.navigate(['/sliders'])\
-          this.showSliders()
+          this.loadingAction = false;
+
+          this.showSliders();
           this.sliderForm.reset();
         }else{
 

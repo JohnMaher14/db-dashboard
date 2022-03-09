@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div
       class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters"
@@ -7,13 +7,10 @@
         <h3 class="mb-0 text-left">{{ 'Case Study Model' }}</h3>
       </div>
       <div class="col-lg-3 text-right">
-        <button
-          data-toggle="modal"
-          [attr.data-target]="'#createCaseStudyImage'"
-          class="btn btn-light"
-        >
-          <i class="la la-plus" aria-hidden="true"></i>
-        </button>
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-minimize"></i></button>
+        <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+
       </div>
     </div>
     <div class="card-body">
@@ -70,100 +67,7 @@
     </div>
   </div>
   <!-- Modal -->
-  <div
-    #createModal
-    class="modal fade"
-    id="createCaseStudyImage"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create client</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form [formGroup]="createCaseStudyModelImage" (ngSubmit)="onCreate()">
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="en_title">En title</label>
-                  <input
-                    id="en_title"
-                    class="form-control"
-                    type="text"
-                    name="en_title"
-                    formControlName="en_title"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="ar_title">Ar title</label>
-                  <input
-                    id="ar_title"
-                    class="form-control"
-                    type="text"
-                    name="ar_title"
-                    formControlName="ar_title"
-                  />
-                </div>
-              </div>
 
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="image">Image</label>
-                  <input
-                    id="image"
-                    (change)="image($event)"
-                    class="form-control"
-                    type="file"
-                    name="image"
-                  />
-                  <input
-                    id="case_id"
-                    class="form-control"
-                    type="hidden"
-                    name="case_id"
-                    formControlName="case_id"
-                    [(ngModel)]="indexForNumbers"
-                  />
-                  <input
-                    id="case_study_id"
-                    class="form-control"
-                    type="hidden"
-                    name="case_study_id"
-                    formControlName="case_study_id"
-                    [(ngModel)]="indexCaseStudyId"
-                  />
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="createCaseStudyModelImage.invalid"
-            >
-              Save changes
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
   <div *ngFor="let CaseStudyGallery of CaseStudyModelGallery" class="modal fade" id="CaseStudyGallery{{CaseStudyGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -184,3 +88,83 @@
     </div>
   </div>
 </div>
+<ng-template #createModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Create casestudy</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createCaseStudyModelImage" (ngSubmit)="onCreate()">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_title">En title</label>
+              <input
+                id="en_title"
+                class="form-control"
+                type="text"
+                name="en_title"
+                formControlName="en_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_title">Ar title</label>
+              <input
+                id="ar_title"
+                class="form-control"
+                type="text"
+                name="ar_title"
+                formControlName="ar_title"
+              />
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input
+                id="image"
+                (change)="image($event)"
+                class="form-control"
+                type="file"
+                name="image"
+              />
+              <input
+                id="case_id"
+                class="form-control"
+                type="hidden"
+                name="case_id"
+                formControlName="case_id"
+                [(ngModel)]="indexForNumbers"
+              />
+              <input
+                id="case_study_id"
+                class="form-control"
+                type="hidden"
+                name="case_study_id"
+                formControlName="case_study_id"
+                [(ngModel)]="indexCaseStudyId"
+              />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="createCaseStudyModelImage.invalid"
+        >
+          Save changes
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

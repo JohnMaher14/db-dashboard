@@ -15,7 +15,11 @@ export class CasestudyComponent implements OnInit {
   delete: string = '';
   caseStudies: any[] =[];
   modalRef!:BsModalRef;
-  caseStudyImage ='https://digitalbondmena.com/case-study/'
+  caseStudyImage ='https://digitalbondmena.com/case-study/';
+  fullscreed: boolean = false;
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   constructor(
     private _CasestudyService:CasestudyService,
     private _BsModalService:BsModalService

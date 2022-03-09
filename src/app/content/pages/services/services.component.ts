@@ -15,8 +15,13 @@ export class ServicesComponent implements OnInit {
   services: any[] =[];
   modalRef!:BsModalRef;
   pageName: string ='Services';
-  @ViewChild('createModal') modal!: ElementRef;
+  fullscreed: boolean = false;
+  loading: boolean = false;
+  loadingAction: boolean = false;
 
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   serviceImage ='https://digitalbondmena.com/services/'
   constructor(
     private _ServiceService:ServiceService,
@@ -61,25 +66,32 @@ export class ServicesComponent implements OnInit {
     this.createService.get('banner_image')?.updateValueAndValidity()
   }
   showServices(){
+    this.loading = true
     this._ServiceService.getServices().subscribe(
       (response) => {
         this.services = response.rows
+        this.loading = false
       }
     )
   }
   onDelete(id:number , data:any){
+    this.loadingAction= true
     this._ServiceService.deleteService(id,data ).subscribe(
       (response) => {
         if (response.success) {
           this.delete = response.success
           this.error = ''
           this.success = ''
+          this.loadingAction= false
+
           this.showServices();
         }
       }
     )
   }
   onCreate(){
+    this.loadingAction= true
+
     this._ServiceService.CreateService(
       this.createService.value.en_title,
       this.createService.value.ar_title,
@@ -97,6 +109,8 @@ export class ServicesComponent implements OnInit {
           this.delete = ''
           this.modalRef.hide()
           this.showServices();
+          this.loadingAction= false;
+
           this.createService.reset();
         }else{
 

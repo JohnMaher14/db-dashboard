@@ -1,5 +1,12 @@
 
-<div class="card">
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="" *ngIf="loadingAction">
+  <app-loader-action></app-loader-action>
+</div>
+<div class="card"  [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
       <div class="col-lg-9">
@@ -8,7 +15,9 @@
       </div>
       <div class="col-lg-3 text-right">
 
-      <button (click)="openModal(createModal)" class="btn btn-light "><i class="la la-plus" aria-hidden="true"></i></button>
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-gow btn-info"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-gow btn-info"><i class="ficon ft-minimize"></i></button>
+        <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
       </div>
     </div>
     <div class="card-body">
@@ -30,6 +39,7 @@
                       <th>id</th>
                       <th>Name</th>
                       <th>Role</th>
+                      <th *ngIf="fullscreed">Feedback</th>
                       <th>Image</th>
 
                       <th>&nbsp;</th>
@@ -41,7 +51,9 @@
                     <td>{{feedback.id}}</td>
                     <td>{{feedback.en_name}}</td>
                     <td>{{feedback.en_role}}</td>
-                    <td><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
+                    <td *ngIf="fullscreed">{{feedback.en_feedback}}</td>
+                    <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
+                    <td *ngIf="fullscreed"><img [src]="feedbackImage+feedback.image" width="60px" height="40px" alt=""></td>
 
                       <td class="row justify-content-center no-gutters">
                         <a routerLink="/feedbacks/{{feedback?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
@@ -54,6 +66,10 @@
               </tbody>
 
               </table>
+              <pagination [totalItems]="feedbacks.length"
+              [(ngModel)]="currentPage"         [itemsPerPage]="5"
+              >
+            </pagination>
           </div>
 
     </div>
@@ -83,7 +99,7 @@
 </div>
 <ng-template #createModal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Create client</h4>
+    <h4 class="modal-title pull-left">Create feedback</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -98,11 +114,17 @@
               <label for="en_name">En name</label>
               <input id="en_name" class="form-control" type="text" name="en_name" formControlName="en_name">
             </div>
+            <div *ngIf="createFeedback.controls['en_name'].touched && createFeedback.controls['en_name'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['en_name'].errors['required']">English name is required</p>
+            </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="ar_name">Ar name</label>
               <input id="ar_name" class="form-control" type="text" name="ar_name" formControlName="ar_name">
+            </div>
+            <div *ngIf="createFeedback.controls['ar_name'].touched && createFeedback.controls['ar_name'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['ar_name'].errors['required']">Arabic name is required</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -110,11 +132,17 @@
               <label for="en_role">En role</label>
               <input id="en_role" class="form-control" type="text" name="en_role" formControlName="en_role">
             </div>
+            <div *ngIf="createFeedback.controls['en_role'].touched && createFeedback.controls['en_role'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['en_role'].errors['required']">English role is required</p>
+            </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="ar_role">Ar role</label>
               <input id="ar_role" class="form-control" type="text" name="ar_role" formControlName="ar_role">
+            </div>
+            <div *ngIf="createFeedback.controls['ar_role'].touched && createFeedback.controls['ar_role'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['ar_role'].errors['required']">Arabic role is required</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -122,12 +150,19 @@
               <label for="en_feedback">En feedback</label>
               <input id="en_feedback" class="form-control" type="text" name="en_feedback" formControlName="en_feedback">
             </div>
+            <div *ngIf="createFeedback.controls['en_feedback'].touched && createFeedback.controls['en_feedback'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['en_feedback'].errors['required']">English feedback is required</p>
+            </div>
+
           </div>
 
           <div class="col-md-6">
             <div class="form-group">
               <label for="ar_feedback">Ar feedback</label>
               <input id="ar_feedback" class="form-control" type="text" name="ar_feedback" formControlName="ar_feedback">
+            </div>
+            <div *ngIf="createFeedback.controls['ar_feedback'].touched && createFeedback.controls['ar_feedback'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['ar_feedback'].errors['required']">Arabic feedback is required</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -139,11 +174,17 @@
                 <option value="1">Show</option>
               </select>
             </div>
+            <div *ngIf="createFeedback.controls['status'].touched && createFeedback.controls['status'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['status'].errors['required']">Status is required</p>
+            </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="image">Image</label>
               <input id="image" (change)="image($event)" class="form-control" type="file" name="image">
+            </div>
+            <div *ngIf="createFeedback.controls['image'].touched && createFeedback.controls['image'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['image'].errors['required']">Image is required</p>
             </div>
           </div>
 
@@ -151,7 +192,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="createFeedback.invalid">Save changes</button>
+        <button type="submit" class="btn btn-primary" [disabled]="createFeedback.invalid">Create feedback</button>
       </div>
     </form>
   </div>

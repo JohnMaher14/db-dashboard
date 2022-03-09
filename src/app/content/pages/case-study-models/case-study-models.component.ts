@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CasestudyService } from 'src/app/services/casestudy.service';
 
 @Component({
@@ -15,14 +16,23 @@ export class CaseStudyModelsComponent implements OnInit {
   success: string = '';
   error: string = '';
   delete: string = '';
+  modalRef!:BsModalRef;
+  fullscreed: boolean = false;
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   constructor(
     private _ActivatedRoute:ActivatedRoute,
-    private _CasestudyService:CasestudyService
+    private _CasestudyService:CasestudyService,
+    private _BsModalService:BsModalService
   ) {
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
 
   }
+  openModal(template:any){
 
+    this.modalRef = this._BsModalService.show(template);
+  }
   ngOnInit(): void {
     this.showCaseStudyModel()
   }
@@ -64,10 +74,11 @@ export class CaseStudyModelsComponent implements OnInit {
     ).subscribe(
       (response) =>{
         if(response.success){
-          this.success = response.success
-          this.error = ''
-          this.delete = ''
-          this.showCaseStudyModel()
+          this.success = response.success;
+          this.error = '';
+          this.delete = '';
+          this.modalRef.hide()
+          this.showCaseStudyModel();
           this.createCaseStudyModel.reset();
         }else{
 

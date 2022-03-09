@@ -15,8 +15,14 @@ export class FeedbacksComponent implements OnInit {
   error: string ='';
   delete: string ='';
     modalRef!:BsModalRef;
-
+    loading: boolean = false;
+    loadingAction: boolean = false;
   feedbackImage ='https://digitalbondmena.com/feedbacks/'
+  fullscreed: boolean = false;
+  currentPage = 1
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   constructor(
     private _FeedbacksService:FeedbacksService,
         private modalService:BsModalService
@@ -28,10 +34,11 @@ export class FeedbacksComponent implements OnInit {
     }
 
   showFeedbacks(){
+    this.loading = true
     this._FeedbacksService.getFeedbacks().subscribe(
       (response) => {
         this.feedbacks = response.rows
-        console.log(response.rows);
+        this.loading = false
       }
     )
   }
@@ -51,7 +58,7 @@ export class FeedbacksComponent implements OnInit {
     en_feedback : new FormControl('', Validators.required),
     ar_feedback : new FormControl('', Validators.required),
     status : new FormControl('', Validators.required),
-    image : new FormControl(null, Validators.required),
+    image : new FormControl('', Validators.required),
   })
 
   image(event:any){
@@ -63,6 +70,7 @@ export class FeedbacksComponent implements OnInit {
   }
 
   onDelete(id:number , data:any){
+    this.loadingAction = true
     this._FeedbacksService.deleteFeedback(id,data ).subscribe(
       (response) => {
         if (response.success) {
@@ -70,12 +78,14 @@ export class FeedbacksComponent implements OnInit {
           this.error = ''
           this.success = ''
           this.showFeedbacks();
+          this.loadingAction = false
 
         }
       }
     )
   }
   onCreate(){
+    this.loadingAction = true
     this._FeedbacksService.CreateFeedback(
       this.createFeedback.value.en_name,
       this.createFeedback.value.ar_name,
@@ -92,7 +102,8 @@ export class FeedbacksComponent implements OnInit {
           this.error = ''
           this.delete = ''
           this.showFeedbacks();
-          this.modalRef.hide()
+          this.modalRef.hide();
+          this.loadingAction = false
           this.createFeedback.reset();
         }else{
 

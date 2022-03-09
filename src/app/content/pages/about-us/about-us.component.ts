@@ -8,7 +8,13 @@ import {AboutService} from 'src/app/services/about.service'
 })
 export class AboutUsComponent implements OnInit {
   AboutUs!: any;
-  aboutUsImage:string = 'https://digitalbondmena.com/about_us_page/'
+  aboutUsImage:string = 'https://digitalbondmena.com/about_us_page/';
+  fullscreed: boolean = false;
+  loading: boolean = false;
+
+  fullScreen(){
+    this.fullscreed = !this.fullscreed
+  }
   constructor(
     private _AboutService:AboutService
   ) { }
@@ -34,10 +40,11 @@ export class AboutUsComponent implements OnInit {
   }
 
   showAboutus(){
+    this.loading = true
     this._AboutService.getAboutUsTable().subscribe(
       (response) => {
         this.AboutUs = response.rows
-        console.log(response.rows);
+        this.loading = false
       }
     )
   }

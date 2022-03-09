@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div
       class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters"
@@ -7,12 +7,11 @@
         <h3 class="mb-0 text-left">{{ pageName }}</h3>
       </div>
       <div class="col-lg-3 text-right">
-        <button
-            (click)="openModal(createModal)"
-          class="btn btn-light"
-        >
-          <i class="la la-plus" aria-hidden="true"></i>
-        </button>
+
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-minimize"></i></button>
+        <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+
       </div>
     </div>
     <div class="card-body">
@@ -33,8 +32,8 @@
               <tr>
                 <th>id</th>
                 <th>Title</th>
+                <th *ngIf="fullscreed">Text</th>
                 <th>Image</th>
-                <!-- <th>Type</th> -->
 
                 <th>&nbsp;</th>
               </tr>
@@ -43,16 +42,16 @@
               <tr *ngFor="let CaseStudy of caseStudies">
                 <td>{{ CaseStudy.id }}</td>
                 <td>{{ CaseStudy.en_title }}</td>
-                <td><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#caseStudiesGallery'+CaseStudy.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
+                <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#caseStudiesGallery'+CaseStudy.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
 
-                <!-- <td>
+                <td *ngIf="fullscreed">{{CaseStudy.en_text}}</td>
+                <td *ngIf="fullscreed">
                   <img
                     [src]="caseStudyImage + CaseStudy.banner_image"
                     width="100px"
                     alt=""
                   />
-                </td> -->
-                <!-- <td>{{CaseStudy.type}}</td> -->
+                </td>
 
                 <td class="row justify-content-center no-gutters">
                   <a
@@ -78,7 +77,7 @@
 
   <ng-template #createModal>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Create Slider</h4>
+      <h4 class="modal-title pull-left">Create casestudy</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>

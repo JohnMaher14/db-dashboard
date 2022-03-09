@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div
       class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters"
@@ -7,13 +7,10 @@
         <h3 class="mb-0 text-left">{{ 'Case Study Model' }}</h3>
       </div>
       <div class="col-lg-3 text-right">
-        <button
-          data-toggle="modal"
-          [attr.data-target]="'#createCaseStudy'"
-          class="btn btn-light"
-        >
-          <i class="la la-plus" aria-hidden="true"></i>
-        </button>
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-minimize"></i></button>
+        <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+
       </div>
     </div>
     <div class="card-body">
@@ -35,6 +32,8 @@
                 <th>id</th>
                 <th>En Title</th>
                 <th>Ar Title</th>
+                <th *ngIf="fullscreed">En text</th>
+                <th *ngIf="fullscreed">Ar Title</th>
 
                 <th>&nbsp;</th>
               </tr>
@@ -44,6 +43,8 @@
                 <td>{{ CaseStudyModel.id }}</td>
                 <td>{{ CaseStudyModel.en_title }}</td>
                 <td>{{ CaseStudyModel.ar_title }}</td>
+                <td *ngIf="fullscreed">{{ CaseStudyModel.en_text }}</td>
+                <td *ngIf="fullscreed">{{ CaseStudyModel.ar_text }}</td>
 
 
 
@@ -68,100 +69,87 @@
     </div>
   </div>
   <!-- Modal -->
-  <div
-    #createModal
-    class="modal fade"
-    id="createCaseStudy"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create client</h5>
+  <ng-template #createModal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Create casestudy</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="createCaseStudyModel" (ngSubmit)="onCreate(createCaseStudyModel)">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="en_title">En title</label>
+                <input
+                  id="en_title"
+                  class="form-control"
+                  type="text"
+                  name="en_title"
+                  formControlName="en_title"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="ar_title">Ar title</label>
+                <input
+                  id="ar_title"
+                  class="form-control"
+                  type="text"
+                  name="ar_title"
+                  formControlName="ar_title"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="en_text">En text</label>
+                <input
+                  id="en_text"
+                  class="form-control"
+                  type="text"
+                  name="en_text"
+                  formControlName="en_text"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="ar_text">Ar text</label>
+                <input
+                  id="ar_text"
+                  class="form-control"
+                  type="text"
+                  name="ar_text"
+                  formControlName="ar_text"
+                />
+              </div>
+            </div>
+
+            <input
+            id="case_id"
+            class="form-control"
+            type="hidden"
+            name="case_id"
+            formControlName="case_id"
+            [(ngModel)]="indexForNumbers"
+          />
+          </div>
+        </div>
+        <div class="modal-footer text-right">
           <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="createCaseStudyModel.invalid"
           >
-            <span aria-hidden="true">&times;</span>
+            Save changes
           </button>
         </div>
-        <form [formGroup]="createCaseStudyModel" (ngSubmit)="onCreate(createCaseStudyModel)">
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="en_title">En title</label>
-                  <input
-                    id="en_title"
-                    class="form-control"
-                    type="text"
-                    name="en_title"
-                    formControlName="en_title"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="ar_title">Ar title</label>
-                  <input
-                    id="ar_title"
-                    class="form-control"
-                    type="text"
-                    name="ar_title"
-                    formControlName="ar_title"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="en_text">En text</label>
-                  <input
-                    id="en_text"
-                    class="form-control"
-                    type="text"
-                    name="en_text"
-                    formControlName="en_text"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="ar_text">Ar text</label>
-                  <input
-                    id="ar_text"
-                    class="form-control"
-                    type="text"
-                    name="ar_text"
-                    formControlName="ar_text"
-                  />
-                </div>
-              </div>
-
-              <input
-              id="case_id"
-              class="form-control"
-              type="hidden"
-              name="case_id"
-              formControlName="case_id"
-              [(ngModel)]="indexForNumbers"
-            />
-            </div>
-          </div>
-          <div class="modal-footer text-right">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="createCaseStudyModel.invalid"
-            >
-              Save changes
-            </button>
-          </div>
-        </form>
-      </div>
+      </form>
     </div>
-  </div>
+  </ng-template>
+
 </div>

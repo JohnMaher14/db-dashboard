@@ -1,7 +1,19 @@
-<div class="card card-content collapse show">
-    <div class="card-header bg-primary bg-darken-2 white text-center card-title-bold text-capitalize">Banners
 
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
 
+  <div class="card-content collapse show">
+    <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
+      <div class="col-lg-9">
+        <h3 class="mb-0 text-left">{{ 'Banners page' }}</h3>
+      </div>
+      <div class="col-lg-3 text-right">
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-minimize"></i></button>
+
+      </div>
     </div>
     <div class="card-body">
 
@@ -13,10 +25,10 @@
                     <tr>
                         <th>id</th>
                         <th>Services banner</th>
+                        <th>Service details banner</th>
                         <th>Say hello banner</th>
-                        <th>Feedback banner</th>
-                        <!-- <th>Section third icon</th> -->
-                        <!-- <th>Section fourth icon</th> -->
+                        <th *ngIf="fullscreed">Feedback banner</th>
+                        <th *ngIf="fullscreed">Contact banner</th>
 
 
                         <th>&nbsp;</th>
@@ -29,8 +41,8 @@
                         <td><img [src]="bannerUrl+banners?.services_banner_image"  height="50px" alt=""></td>
                         <td><img [src]="bannerUrl+banners?.services_detail_banner_image" height="50px"  alt=""></td>
                         <td><img [src]="bannerUrl+banners?.say_hello_banner_image" height="50px"  alt=""></td>
-                        <!-- <td><img [src]="bannerUrl+banners?.feedback_banner_image" alt=""></td> -->
-                        <!-- <td><img [src]="bannerUrl+banners?.contact_banner_image" alt=""></td> -->
+                        <td *ngIf="fullscreed"><img [src]="bannerUrl+banners?.feedback_banner_image" height="50px" alt=""></td>
+                        <td *ngIf="fullscreed"><img [src]="bannerUrl+banners?.contact_banner_image" height="50px" alt=""></td>
 
                         <td class="d-flex py-3 justify-content-center no-gutters">
                             <a routerLink="/banners/edit/{{banners?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
@@ -40,9 +52,8 @@
 
 
                 </tbody>
-
               </table>
-              <section class="slider">
+              <!-- <section class="slider">
                 <h4>All images</h4>
 
                 <owl-carousel-o [options]="mainSlider">
@@ -87,12 +98,12 @@
                     </ng-template>
                   </ng-container>
                 </owl-carousel-o>
-              </section>
+              </section> -->
           </div>
 
     </div>
   </div>
-
+</div>
   <div class="modal fade" id="fullSize" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">

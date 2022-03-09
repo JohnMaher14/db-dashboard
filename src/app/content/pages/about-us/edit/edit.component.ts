@@ -13,6 +13,8 @@ export class EditComponent implements OnInit {
   shortLink: string = "";
   aboutusEdit!:FormGroup;
   aboutUsData:any;
+  aboutLink= 'https://digitalbondmena.com/about_us_page/';
+
   constructor(
     private _AboutService:AboutService,
     private _FormBuilder:FormBuilder
