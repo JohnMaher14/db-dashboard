@@ -42,6 +42,9 @@ $db-dashboard-theme: mat.define-light-theme((
 // @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 $mainColor: #290707;
 $secondaryColor: #ed2924;
+.text-primary{
+  color: $secondaryColor !important
+}
 .main-menu.menu-dark .navigation>li.active>a{
   border-right: 4px solid $mainColor;
   margin:0 !important;
@@ -305,5 +308,19 @@ body.vertical-layout.vertical-menu-modern .content{
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+.ngx-pagination{
+  padding-left:0;
+  .current{
+    background-color: $mainColor !important
+  }
+  a:hover{
+    color: $mainColor
+  }
+}
+footer{
+  a{
+    color: $secondaryColor !important
   }
 }

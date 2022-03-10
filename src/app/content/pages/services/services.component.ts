@@ -18,7 +18,7 @@ export class ServicesComponent implements OnInit {
   fullscreed: boolean = false;
   loading: boolean = false;
   loadingAction: boolean = false;
-
+  page!:number;
   fullScreen(){
     this.fullscreed = !this.fullscreed
   }

@@ -15,9 +15,9 @@
       </div>
       <div class="col-lg-3 text-right">
 
-        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-gow btn-info"><i class="ficon ft-maximize"></i></button>
-        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-gow btn-info"><i class="ficon ft-minimize"></i></button>
-        <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
+      <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
       </div>
     </div>
     <div class="card-body">
@@ -47,7 +47,7 @@
               </thead>
               <tbody>
 
-                  <tr *ngFor="let feedback of feedbacks">
+                  <tr *ngFor="let feedback of feedbacks | paginate: { itemsPerPage: 5, currentPage: currentPage }">
                     <td>{{feedback.id}}</td>
                     <td>{{feedback.en_name}}</td>
                     <td>{{feedback.en_role}}</td>
@@ -66,10 +66,9 @@
               </tbody>
 
               </table>
-              <pagination [totalItems]="feedbacks.length"
-              [(ngModel)]="currentPage"         [itemsPerPage]="5"
-              >
-            </pagination>
+              <pagination-controls [maxSize]="5"  (pageChange)="currentPage = $event" >
+
+              </pagination-controls>
           </div>
 
     </div>

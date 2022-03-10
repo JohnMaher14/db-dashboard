@@ -1,12 +1,21 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { BsModalService , BsModalRef} from 'ngx-bootstrap/modal';
 import { ClientsService } from 'src/app/services/clients.service';
+
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
+  template: `
+  <ul>
+    <li *ngFor="let movies of trendingMovies | paginate: { itemsPerPage: 5, currentPage: page }"> ... </li>
+  </ul>
+
+<pagination-controls (pageChange)="page = $event"></pagination-controls>
+  `,
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit {
@@ -16,6 +25,8 @@ export class ClientsComponent implements OnInit {
   delete: string = '';
   clients: any[] =[];
   modalRef!: BsModalRef;
+  config:any;
+  page:any;
 
   clientImage ='https://digitalbondmena.com/clients/';
   fullscreed: boolean = false;
@@ -29,7 +40,12 @@ export class ClientsComponent implements OnInit {
     private _ClientsService:ClientsService,
     public _MatDialog:MatDialog,
 
-    public modalService: BsModalService  ) { }
+    public modalService: BsModalService  ) {
+      this.config = {
+        itemsPerPage: 5,
+        currentPage: 1,
+      };
+     }
 
   ngOnInit(): void {
     this.showClients()
@@ -53,6 +69,9 @@ export class ClientsComponent implements OnInit {
   }
   openModal(template: any) {
     this.modalRef = this.modalService.show(template);
+  }
+  pageChanged(event:any){
+    this.config.currentPage = event;
   }
   showClients(){
     this.loading = true

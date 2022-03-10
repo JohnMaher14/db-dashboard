@@ -1,3 +1,11 @@
+
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="" *ngIf="loadingAction">
+  <app-loader-action></app-loader-action>
+</div>
 <div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div
@@ -8,9 +16,9 @@
       </div>
       <div class="col-lg-3 text-right">
 
-        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-maximize"></i></button>
-        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-glow btn-info"><i class="ficon ft-minimize"></i></button>
-        <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
+      <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
 
       </div>
     </div>

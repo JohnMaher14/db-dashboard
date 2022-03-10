@@ -36,6 +36,9 @@ import { CaseStudyModelGalleryComponent } from './content/pages/case-study-model
 import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-model-gallery/edit-case-study-modal-gallery/edit-case-study-modal-gallery.component';
 import { LoaderActionComponent } from './content/shared/loader-action/loader-action.component';
 import { LoadingComponent } from './content/shared/loading/loading.component';
+import { NgxPaginationModule } from "ngx-pagination";
+import { AuthComponent } from './content/auth/auth.component';
+import { NotfoundComponent } from './content/shared/notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,9 @@ import { LoadingComponent } from './content/shared/loading/loading.component';
     CaseStudyModelGalleryComponent,
     EditCaseStudyModalGalleryComponent,
     LoaderActionComponent,
-    LoadingComponent
+    LoadingComponent,
+    AuthComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +82,8 @@ import { LoadingComponent } from './content/shared/loading/loading.component';
     MatDialogModule,
     CarouselModule,
     PaginationModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxPaginationModule
 
   ],
   providers: [],

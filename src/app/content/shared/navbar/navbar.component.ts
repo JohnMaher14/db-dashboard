@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +9,7 @@ import { Component, HostListener, Inject, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
   isFullScreen!: boolean;
+  isLogined:boolean = false;
   elem: any;
   @HostListener('document:fullscreenchange', ['$event'])
   @HostListener('document:webkitfullscreenchange', ['$event'])
@@ -40,8 +42,18 @@ export class NavbarComponent implements OnInit {
   //   }
   // }
 constructor(
-        @Inject(DOCUMENT) private document: any
+        @Inject(DOCUMENT) private document: any,
+        private _AuthService:AuthService
     ) {
+      _AuthService.currentUserData.subscribe(()=>{
+        if (_AuthService.currentUserData.getValue() == null) {
+          this.isLogined = false;
+
+        }
+        else{
+          this.isLogined = true;
+        }
+      })
 }
 ngOnInit(): void {
     this.elem = document.documentElement;
@@ -74,5 +86,8 @@ openFullscreen() {
           /* IE/Edge */
           this.document.msExitFullscreen();
         }
+      }
+      signOut(){
+        this._AuthService.signOut();
       }
 }

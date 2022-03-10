@@ -1,7 +1,7 @@
 
 <app-navbar></app-navbar>
-<app-sidebar></app-sidebar>
-<div class="app-content content">
+<app-sidebar *ngIf="isLogined"></app-sidebar>
+<div class="app-content content" [ngClass]="{'ml-0': !isLogined}">
   <div class="content-wrapper">
       <div class="content-body">
         <router-outlet></router-outlet>

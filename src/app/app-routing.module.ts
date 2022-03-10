@@ -21,31 +21,37 @@ import { CaseStudyModelsComponent } from './content/pages/case-study-models/case
 import { EditCaseStudyModelComponent } from './content/pages/case-study-models/edit-case-study-model/edit-case-study-model.component';
 import { CaseStudyModelGalleryComponent } from './content/pages/case-study-model-gallery/case-study-model-gallery.component';
 import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-model-gallery/edit-case-study-modal-gallery/edit-case-study-modal-gallery.component';
+import { AuthComponent } from './content/auth/auth.component';
+import { NotfoundComponent } from './content/shared/notfound/notfound.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
 
   {path: '', redirectTo:'home' ,pathMatch:'full'},
-  {path: 'home', component:HomeDashboardComponent},
-  {path: 'home-page', component:HomeComponent},
-  {path: 'home-page/edit/:id', component:EditHomeComponent},
-  {path: 'about-us', component:AboutUsComponent},
-  {path: 'about-us/edit/:id', component:EditComponent},
-  {path: 'services', component:ServicesComponent},
-  {path: 'services/:id', component:EditServiceComponent},
-  {path: 'clients', component:ClientsComponent},
-  {path: 'clients/:id', component:EditClientComponent},
-  {path: 'feedbacks', component:FeedbacksComponent},
-  {path: 'feedbacks/:id', component:EditFeedbackComponent},
-  {path: 'case-studies', component:CasestudyComponent},
-  {path: 'case-studies/:id', component:EditCasestudyComponent},
-  {path: 'case-study-model/:id', component:CaseStudyModelsComponent},
-  {path: 'case-study-model/edit/:id', component:EditCaseStudyModelComponent},
-  {path: 'case-study-model-gallery/:id', component:CaseStudyModelGalleryComponent},
-  {path: 'case-study-model-gallery/edit/:id', component:EditCaseStudyModalGalleryComponent},
-  {path: 'sliders', component:SlidersComponent},
-  {path: 'sliders/:id', component:EditSlidersComponent},
-  {path: 'banners', component:BannerImagesComponent},
-  {path: 'banners/edit/:id', component:EditBannersComponent},
+  {path: 'home', canActivate:[AuthGuard] , component:HomeDashboardComponent},
+  {path: 'home-page', canActivate:[AuthGuard] , component:HomeComponent},
+  {path: 'home-page/edit/:id', canActivate:[AuthGuard] , component:EditHomeComponent},
+  {path: 'about-us', canActivate:[AuthGuard] , component:AboutUsComponent},
+  {path: 'about-us/edit/:id', canActivate:[AuthGuard] , component:EditComponent},
+  {path: 'services', canActivate:[AuthGuard] , component:ServicesComponent},
+  {path: 'services/:id', canActivate:[AuthGuard] , component:EditServiceComponent},
+  {path: 'clients', canActivate:[AuthGuard] , component:ClientsComponent},
+  {path: 'clients/:id', canActivate:[AuthGuard] , component:EditClientComponent},
+  {path: 'feedbacks', canActivate:[AuthGuard] , component:FeedbacksComponent},
+  {path: 'feedbacks/:id', canActivate:[AuthGuard] , component:EditFeedbackComponent},
+  {path: 'case-studies', canActivate:[AuthGuard] , component:CasestudyComponent},
+  {path: 'case-studies/:id', canActivate:[AuthGuard] , component:EditCasestudyComponent},
+  {path: 'case-study-model/:id', canActivate:[AuthGuard] , component:CaseStudyModelsComponent},
+  {path: 'case-study-model/edit/:id', canActivate:[AuthGuard] , component:EditCaseStudyModelComponent},
+  {path: 'case-study-model-gallery/:id', canActivate:[AuthGuard] , component:CaseStudyModelGalleryComponent},
+  {path: 'case-study-model-gallery/edit/:id', canActivate:[AuthGuard] , component:EditCaseStudyModalGalleryComponent},
+  {path: 'sliders', canActivate:[AuthGuard] , component:SlidersComponent},
+  {path: 'sliders/:id', canActivate:[AuthGuard] , component:EditSlidersComponent},
+  {path: 'banners', canActivate:[AuthGuard] , component:BannerImagesComponent},
+  {path: 'banners/edit/:id', canActivate:[AuthGuard] , component:EditBannersComponent},
+  {path: 'auth', component:AuthComponent},
+  {path: '**', component:NotfoundComponent}
+
 ];
 
 @NgModule({

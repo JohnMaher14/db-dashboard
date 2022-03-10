@@ -19,6 +19,8 @@ export class SlidersComponent implements OnInit {
   modalRef!:BsModalRef;
   sliderImage ='https://digitalbondmena.com/sliders/';
   fullscreed: boolean = false;
+  page!:number;
+
   loading: boolean = false;
 
     loadingAction: boolean = false;
