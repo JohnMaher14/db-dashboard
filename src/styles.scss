@@ -220,7 +220,7 @@ body.vertical-layout.vertical-menu-modern .content{
   &_data{
     position: absolute;
     inset:0;
-    background-color: $mainColor;
+    background-color: #f4f5fa;
     z-index:800;
   
     .lds-ring {
@@ -239,10 +239,10 @@ body.vertical-layout.vertical-menu-modern .content{
       width: 64px;
       height: 64px;
       margin: 8px;
-      border: 8px solid #fff;
+      border: 8px solid $mainColor;
       border-radius: 50%;
       animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-      border-color: #fff transparent transparent transparent;
+      border-color: $mainColor transparent transparent transparent;
     }
     .lds-ring div:nth-child(1) {
       animation-delay: -0.45s;
@@ -257,6 +257,11 @@ body.vertical-layout.vertical-menu-modern .content{
   }
 }
 .action{
+  
+  &_minwidth{
+    min-width: 181px;
+  }
+  
   &_slider{
     padding:1.6rem 0 !important;
   }

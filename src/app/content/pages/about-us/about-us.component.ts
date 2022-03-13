@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import {AboutService} from 'src/app/services/about.service'
 @Component({
@@ -16,7 +17,8 @@ export class AboutUsComponent implements OnInit {
     this.fullscreed = !this.fullscreed
   }
   constructor(
-    private _AboutService:AboutService
+    private _AboutService:AboutService,
+    private _Title:Title
   ) { }
   mainSlider: OwlOptions = {
     loop: true,
@@ -50,7 +52,9 @@ export class AboutUsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showAboutus()
+    this.showAboutus();
+    this._Title.setTitle(`Digital Bond | About us`)
+
   }
 
 }

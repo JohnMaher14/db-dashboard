@@ -43,7 +43,7 @@
                 <th *ngIf="fullscreed">Text</th>
                 <th>Image</th>
 
-                <th>&nbsp;</th>
+                <th class="action_minwidth">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@
                   />
                 </td>
 
-                <td class="row justify-content-center no-gutters">
+                <td class="row justify-content-start no-gutters">
                   <a
                     routerLink="/case-studies/{{ CaseStudy?.id }}"
                     class="btn btn-round mr-1 btn-success"

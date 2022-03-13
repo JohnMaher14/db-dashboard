@@ -39,6 +39,8 @@ import { LoadingComponent } from './content/shared/loading/loading.component';
 import { NgxPaginationModule } from "ngx-pagination";
 import { AuthComponent } from './content/auth/auth.component';
 import { NotfoundComponent } from './content/shared/notfound/notfound.component';
+import { TeamsComponent } from './content/pages/teams/teams.component';
+import { EditTeamComponent } from './content/pages/teams/edit-team/edit-team.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { NotfoundComponent } from './content/shared/notfound/notfound.component'
     LoaderActionComponent,
     LoadingComponent,
     AuthComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    TeamsComponent,
+    EditTeamComponent
   ],
   imports: [
     BrowserModule,

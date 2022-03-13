@@ -2,30 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { FeedbacksService } from 'src/app/services/feedbacks.service';
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
-  selector: 'app-feedbacks',
-  templateUrl: './feedbacks.component.html',
-  styleUrls: ['./feedbacks.component.scss']
+  selector: 'app-teams',
+  templateUrl: './teams.component.html',
+  styleUrls: ['./teams.component.scss']
 })
-export class FeedbacksComponent implements OnInit {
-  pageName:string='Feedbacks'
-  feedbacks: any[] =[];
+export class TeamsComponent implements OnInit {
+
+  pageName:string='Teams'
+  teams: any[] =[];
   success: string ='';
   error: string ='';
   delete: string ='';
     modalRef!:BsModalRef;
     loading: boolean = false;
     loadingAction: boolean = false;
-  feedbackImage ='https://digitalbondmena.com/feedbacks/'
+  teamImage ='https://digitalbondmena.com/teams/'
   fullscreed: boolean = false;
   currentPage = 1
   fullScreen(){
     this.fullscreed = !this.fullscreed
   }
   constructor(
-    private _FeedbacksService:FeedbacksService,
+    private _TeamService:TeamService,
         private modalService:BsModalService,
         private _Title:Title
 
@@ -35,52 +36,45 @@ export class FeedbacksComponent implements OnInit {
       this.modalRef = this.modalService.show(template);
     }
 
-  showFeedbacks(){
+  showTeams(){
     this.loading = true
-    this._FeedbacksService.getFeedbacks().subscribe(
+    this._TeamService.getTeams().subscribe(
       (response) => {
-        this.feedbacks = response.rows
+        this.teams = response.rows
         this.loading = false
       }
     )
   }
-  // en_name :
-  // ar_name :
-  // en_role :
-  // ar_role :
-  // en_feedback :
-  // ar_feedback :
-  // status :
-  // image
-  createFeedback = new FormGroup({
+
+  createTeam = new FormGroup({
     en_name : new FormControl('', Validators.required),
     ar_name : new FormControl('', Validators.required),
     en_role : new FormControl('', Validators.required),
     ar_role : new FormControl('', Validators.required),
-    en_feedback : new FormControl('', Validators.required),
-    ar_feedback : new FormControl('', Validators.required),
-    status : new FormControl('', Validators.required),
+    facebook : new FormControl('', Validators.required),
+    instagram : new FormControl('', Validators.required),
+    twitter : new FormControl('', Validators.required),
     image : new FormControl('', Validators.required),
   })
 
   image(event:any){
     const file = event.target.files ? event.target.files[0] : '';
-    this.createFeedback.patchValue({
+    this.createTeam.patchValue({
       image: file
     })
-    this.createFeedback.get('image')?.updateValueAndValidity()
+    this.createTeam.get('image')?.updateValueAndValidity()
   }
 
   onDelete(id:number , data:any){
-    if(confirm(`Are you sure to delete feedback with id ${id}`)) {
+    if(confirm(`Are you sure to delete team with id ${id}`)) {
       this.loadingAction = true
-      this._FeedbacksService.deleteFeedback(id,data ).subscribe(
+      this._TeamService.deleteTeam(id,data ).subscribe(
         (response) => {
           if (response.success) {
             this.delete = response.success
             this.error = ''
             this.success = ''
-            this.showFeedbacks();
+            this.showTeams();
             this.loadingAction = false
 
           }
@@ -90,25 +84,25 @@ export class FeedbacksComponent implements OnInit {
   }
   onCreate(){
     this.loadingAction = true
-    this._FeedbacksService.CreateFeedback(
-      this.createFeedback.value.en_name,
-      this.createFeedback.value.ar_name,
-      this.createFeedback.value.en_role,
-      this.createFeedback.value.ar_role,
-      this.createFeedback.value.en_feedback,
-      this.createFeedback.value.ar_feedback,
-      this.createFeedback.value.status,
-      this.createFeedback.value.image,
+    this._TeamService.CreateTeam(
+      this.createTeam.value.en_name,
+      this.createTeam.value.ar_name,
+      this.createTeam.value.en_role,
+      this.createTeam.value.ar_role,
+      this.createTeam.value.facebook,
+      this.createTeam.value.instagram,
+      this.createTeam.value.twitter,
+      this.createTeam.value.image,
     ).subscribe(
       (response) =>{
         if(response.success){
           this.success = response.success
           this.error = ''
           this.delete = ''
-          this.showFeedbacks();
+          this.showTeams();
           this.modalRef.hide();
           this.loadingAction = false
-          this.createFeedback.reset();
+          this.createTeam.reset();
         }else{
 
           console.log(response);
@@ -117,8 +111,8 @@ export class FeedbacksComponent implements OnInit {
     )
   }
   ngOnInit(): void {
-    this.showFeedbacks()
-    this._Title.setTitle(`Digital Bond | Feedbacks`)
-
+    this.showTeams()
+    this._Title.setTitle(`Digital Bond | Teams`)
   }
+
 }

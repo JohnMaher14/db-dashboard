@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { CasestudyService } from 'src/app/services/casestudy.service';
 import { ClientsService } from 'src/app/services/clients.service';
 import { FeedbacksService } from 'src/app/services/feedbacks.service';
@@ -16,7 +17,8 @@ export class HomeDashboardComponent implements OnInit {
   constructor(
     private _ClientsService:ClientsService,
     private _FeedbacksService:FeedbacksService,
-    private _CasestudyService:CasestudyService
+    private _CasestudyService:CasestudyService,
+    private _Title:Title
   ) { }
 
   showClientsLength(){
@@ -45,6 +47,7 @@ export class HomeDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.showClientsLength();
     this.showCaseStudyLength();
-    this.showFeedbacksLength()
+    this.showFeedbacksLength();
+    this._Title.setTitle(`Digital Bond | Home`)
   }
 }

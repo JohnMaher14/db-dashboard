@@ -24,6 +24,8 @@ import { EditCaseStudyModalGalleryComponent } from './content/pages/case-study-m
 import { AuthComponent } from './content/auth/auth.component';
 import { NotfoundComponent } from './content/shared/notfound/notfound.component';
 import { AuthGuard } from './services/auth.guard';
+import { TeamsComponent } from './content/pages/teams/teams.component';
+import { EditTeamComponent } from './content/pages/teams/edit-team/edit-team.component';
 
 const routes: Routes = [
 
@@ -47,6 +49,8 @@ const routes: Routes = [
   {path: 'case-study-model-gallery/edit/:id', canActivate:[AuthGuard] , component:EditCaseStudyModalGalleryComponent},
   {path: 'sliders', canActivate:[AuthGuard] , component:SlidersComponent},
   {path: 'sliders/:id', canActivate:[AuthGuard] , component:EditSlidersComponent},
+  {path: 'teams', canActivate:[AuthGuard] , component:TeamsComponent},
+  {path: 'teams/:id', canActivate:[AuthGuard] , component:EditTeamComponent},
   {path: 'banners', canActivate:[AuthGuard] , component:BannerImagesComponent},
   {path: 'banners/edit/:id', canActivate:[AuthGuard] , component:EditBannersComponent},
   {path: 'auth', component:AuthComponent},

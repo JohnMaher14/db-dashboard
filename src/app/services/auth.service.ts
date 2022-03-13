@@ -15,6 +15,7 @@ export class AuthService {
   constructor(private _HttpClient: HttpClient , private _Router:Router) {
     if (localStorage.getItem('currentUser' || '{}')) {
       this.saveCurrentUserToken();
+      this._Router.navigate(['/home'])
     }
   }
 

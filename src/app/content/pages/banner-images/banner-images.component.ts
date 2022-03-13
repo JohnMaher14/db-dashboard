@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HomeService } from 'src/app/services/home.service';
 
@@ -18,11 +19,14 @@ export class BannerImagesComponent implements OnInit {
     this.fullscreed = !this.fullscreed
   }
   constructor(
-    private _HomeService:HomeService
+    private _HomeService:HomeService,
+    private _Title:Title
   ) { }
 
   ngOnInit(): void {
-    this.showBanners()
+    this.showBanners();
+    this._Title.setTitle(`Digital Bond | Banner images`)
+
   }
   showBanners(){
     this.loading = true

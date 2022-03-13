@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
   isFullScreen!: boolean;
   isLogined:boolean = false;
   elem: any;
+  userData:any[] = [];
   @HostListener('document:fullscreenchange', ['$event'])
   @HostListener('document:webkitfullscreenchange', ['$event'])
    @HostListener('document:mozfullscreenchange', ['$event'])
@@ -57,6 +58,9 @@ constructor(
 }
 ngOnInit(): void {
     this.elem = document.documentElement;
+    
+    this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}')
+    console.log(JSON.parse(localStorage.getItem('currentUser') || '{}'));
 }
 openFullscreen() {
         if (this.elem.requestFullscreen) {
