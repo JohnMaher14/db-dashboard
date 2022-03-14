@@ -32,6 +32,7 @@ export class AuthComponent implements OnInit {
       (response) => {
         if (response.message === 'sucess') {
           localStorage.setItem('currentUser', JSON.stringify(response));
+          localStorage.setItem('currentUsername', JSON.stringify(response.user.name));
           this._AuthService.saveCurrentUserToken();
           this._Router.navigate(['/home']);
           this.actionLoader = false;

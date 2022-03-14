@@ -20,14 +20,7 @@
             <h3 class="brand-text">Digital Bond</h3></a
           >
         </li>
-        <li class="nav-item d-none d-lg-block nav-toggle">
-          <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"
-            ><i
-              class="toggle-icon ft-toggle-right font-medium-3 white"
-              data-ticon="ft-toggle-right"
-            ></i
-          ></a>
-        </li>
+
         <li class="nav-item d-lg-none">
           <a
             class="nav-link open-navbar-container"
@@ -41,6 +34,22 @@
     <div class="navbar-container content">
       <div class="collapse navbar-collapse" id="navbar-mobile">
         <ul class="nav navbar-nav mr-auto float-left">
+          <li class="nav-item d-none d-lg-block nav-toggle" *ngIf="!isCollapsed" (click)="collpaseSidebar()">
+            <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"
+              ><i
+                class="toggle-icon ft-toggle-left font-medium-3"
+                data-ticon="ft-toggle-left"
+              ></i
+            ></a>
+          </li>
+          <li class="nav-item d-none d-lg-block nav-toggle" *ngIf="isCollapsed" (click)="openSidebar()">
+            <a class="nav-link modern-nav-toggle pr-0" data-toggle="expand"
+              ><i
+                class="toggle-icon ft-toggle-right font-medium-3"
+                data-ticon="ft-toggle-right"
+              ></i
+            ></a>
+          </li>
           <li class="nav-item d-none d-lg-block">
             <!-- <a class="nav-link nav-link-expand" (click)="GoFullScreen()"
               ><i class="ficon ft-maximize"></i
@@ -55,20 +64,20 @@
         </ul>
         <ul class="nav navbar-nav float-right">
           <li *ngIf="!isLogined" class="dropdown dropdown-user nav-item">
-
+            <p class="mb-0">You ar not logined</p>
           </li>
           <li *ngIf="isLogined" class="dropdown dropdown-user nav-item">
             <a
               class="dropdown-toggle nav-link dropdown-user-link"
-              href="#"
+
               data-toggle="dropdown"
-              ><span *ngFor="let user of userData" class="mr-1 user-name text-bold-700">{{user.user.name}}</span
+              ><span  class="mr-1 user-name text-bold-700">{{username}}</span
               ><span class="avatar avatar-online"
                 ><img
                   src="assets/images/avatar.png"
                   alt="avatar" /><i></i></span
             ></a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-user dropdown-menu-right">
               <a  (click)="signOut()" class="dropdown-item"
                 ><i class="ft-power"></i> Logout</a
               >
