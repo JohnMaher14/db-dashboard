@@ -1,12 +1,19 @@
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="" *ngIf="loadingAction">
+  <app-loader-action></app-loader-action>
+</div>
 <div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div
       class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters"
     >
-      <div class="col-lg-9">
+      <div class="col-9">
         <h3 class="mb-0 text-left">{{ 'Case Study Model' }}</h3>
       </div>
-      <div class="col-lg-3 text-right">
+      <div class="col-3 text-right">
         <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
         <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
       <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
@@ -40,13 +47,15 @@
               <tr *ngFor="let gallery of CaseStudyModelGallery">
                 <td>{{ gallery.id }}</td>
                 <td>{{ gallery.en_title }}</td>
-                <td><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#CaseStudyGallery'+gallery.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
+                <td>
 
-                <!-- <td><img [src]="caseStudyImage+gallery.image" height="50px" alt=""></td> -->
+                  <img *ngIf="fullscreed" [src]="caseStudyImage+gallery.image" height="50px" alt="">
+                  <button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#CaseStudyGallery'+gallery.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button>
+                </td>
 
 
 
-                <td class="row justify-content-center no-gutters">
+                <td class="row justify-content-start no-gutters">
                   <a
                     [routerLink]="['/case-study-model-gallery/edit/'+gallery?.id ]"
                     class="btn btn-round mr-1 btn-success"
@@ -69,7 +78,7 @@
   <!-- Modal -->
 
   <div *ngFor="let CaseStudyGallery of CaseStudyModelGallery" class="modal fade" id="CaseStudyGallery{{CaseStudyGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title mb-0" id="exampleModalLabel">{{CaseStudyGallery.en_title}}</h5>

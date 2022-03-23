@@ -16,6 +16,8 @@ export class TeamsComponent implements OnInit {
   success: string ='';
   error: string ='';
   delete: string ='';
+  page!:number;
+
     modalRef!:BsModalRef;
     loading: boolean = false;
     loadingAction: boolean = false;
@@ -33,7 +35,13 @@ export class TeamsComponent implements OnInit {
   ) { }
     openModal(template:any){
 
-      this.modalRef = this.modalService.show(template);
+      this.modalRef = this.modalService.show(template ,
+        {
+
+          class: 'modal-dialog-centered'
+        }
+
+        );
     }
 
   showTeams(){

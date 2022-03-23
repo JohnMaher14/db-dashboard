@@ -6,10 +6,10 @@
 
   <div class="card-content collapse show">
     <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
-      <div class="col-lg-9">
+      <div class="col-9">
         <h3 class="mb-0 text-left">{{ 'Banners page' }}</h3>
       </div>
-      <div class="col-lg-3 text-right">
+      <div class="col-3 text-right">
         <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 btn-light"><i class="ficon ft-maximize"></i></button>
         <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 btn-light"><i class="ficon ft-minimize"></i></button>
 
@@ -44,7 +44,7 @@
                         <td *ngIf="fullscreed"><img [src]="bannerUrl+banners?.feedback_banner_image" height="50px" alt=""></td>
                         <td *ngIf="fullscreed"><img [src]="bannerUrl+banners?.contact_banner_image" height="50px" alt=""></td>
 
-                        <td class="d-flex py-3 justify-content-center no-gutters">
+                        <td class="d-flex py-3 justify-content-start no-gutters">
                             <a routerLink="/banners/edit/{{banners?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
                         </td>
                     </tr>
@@ -105,7 +105,7 @@
   </div>
 </div>
   <div class="modal fade" id="fullSize" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title mb-0" id="exampleModalLabel">Images</h5>
@@ -140,7 +140,7 @@
                         <!-- <td><img [src]="bannerUrl+banners?.feedback_banner_image" alt=""></td> -->
                         <!-- <td><img [src]="bannerUrl+banners?.contact_banner_image" alt=""></td> -->
 
-                        <td class="d-flex py-3 justify-content-center no-gutters">
+                        <td class="d-flex py-3 justify-content-start no-gutters">
                             <a routerLink="/banners/edit/{{banners?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
                         </td>
                     </tr>

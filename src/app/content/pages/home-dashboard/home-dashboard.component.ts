@@ -11,42 +11,22 @@ import { FeedbacksService } from 'src/app/services/feedbacks.service';
   styleUrls: ['./home-dashboard.component.scss']
 })
 export class HomeDashboardComponent implements OnInit {
+  loading: boolean = false;
   caseStudyStatistics!:number;
   clientsStatistics!:number;
   feedbacksStatistics!:number;
+  clientMessages: any[] =[];
   page!:number;
   modalRef!:BsModalRef;
-  clientMessages: any[] =[];
-  loading: boolean = false;
   constructor(
     private _ClientsService:ClientsService,
     private _FeedbacksService:FeedbacksService,
     private _CasestudyService:CasestudyService,
     private _Title:Title
   ) { }
-
-  showClientsLength(){
-    this.loading = true
-    this._ClientsService.getClients().subscribe(
-      (response) => {
-        this.clientsStatistics = response.rows.length
-        this.loading = false
-      }
-    )
-  }
-  showCaseStudyLength(){
-    this.loading = true
-
-    this._CasestudyService.getCaseStudy().subscribe(
-      (response) => {
-        this.caseStudyStatistics = response.rows.length;
-        this.loading = false
-
-      }
-    )
-  }
   showClientMessage(){
-    this.loading= true
+    this.loading = true;
+
     this._FeedbacksService.getClientMessages().subscribe(
       (response) => {
         this.clientMessages = response.rows;
@@ -56,23 +36,38 @@ export class HomeDashboardComponent implements OnInit {
     )
 
   }
+  showClientsLength(){
 
-  showFeedbacksLength(){
-    this.loading = true
-
-    this._FeedbacksService.getFeedbacks().subscribe(
+    this._ClientsService.getClients().subscribe(
       (response) => {
-        this.feedbacksStatistics = response.rows.length;
-        this.loading = false;
+        this.clientsStatistics = response.rows.length
+      }
+    )
+  }
+  showCaseStudyLength(){
+
+    this._CasestudyService.getCaseStudy().subscribe(
+      (response) => {
+        this.caseStudyStatistics = response.rows.length;
 
       }
     )
   }
+
+
+  showFeedbacksLength(){
+
+    this._FeedbacksService.getFeedbacks().subscribe(
+      (response) => {
+      this.feedbacksStatistics = response.rows.length;
+      }
+    )
+  }
   ngOnInit(): void {
+    this.showClientMessage();
     this.showClientsLength();
     this.showCaseStudyLength();
     this.showFeedbacksLength();
-    this.showClientMessage();
     this._Title.setTitle(`Digital Bond | Home`)
   }
 }

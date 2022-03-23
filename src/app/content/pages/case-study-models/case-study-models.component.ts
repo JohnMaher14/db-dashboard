@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CasestudyService } from 'src/app/services/casestudy.service';
@@ -16,6 +17,9 @@ export class CaseStudyModelsComponent implements OnInit {
   success: string = '';
   error: string = '';
   delete: string = '';
+  loading:boolean = false;
+  loadingAction:boolean = false;
+
   modalRef!:BsModalRef;
   fullscreed: boolean = false;
   fullScreen(){
@@ -24,17 +28,24 @@ export class CaseStudyModelsComponent implements OnInit {
   constructor(
     private _ActivatedRoute:ActivatedRoute,
     private _CasestudyService:CasestudyService,
-    private _BsModalService:BsModalService
+    private _BsModalService:BsModalService,
+    private _Title:Title
   ) {
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
 
   }
   openModal(template:any){
 
-    this.modalRef = this._BsModalService.show(template);
+    this.modalRef = this._BsModalService.show(template
+      ,{
+        class: 'modal-dialog-centered'
+      }
+  );
   }
   ngOnInit(): void {
     this.showCaseStudyModel()
+    this._Title.setTitle(`Digital Bond | Case studies model`)
+
   }
   showCaseStudyModel(){
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
@@ -56,12 +67,15 @@ export class CaseStudyModelsComponent implements OnInit {
     case_id : new FormControl('', Validators.required),
   })
   onDelete(id:number , data:any){
+    // if(con)
+    this.loadingAction = true;
     this._CasestudyService.deleteCaseStudyModel(id,data ).subscribe(
       (response) => {
         if (response.success) {
           this.delete = response.success
           this.error = ''
           this.success = ''
+          this.loadingAction = false;
           this.showCaseStudyModel()
 
         }
@@ -69,6 +83,7 @@ export class CaseStudyModelsComponent implements OnInit {
     )
   }
   onCreate(formData:FormGroup){
+    this.loadingAction = true;
     this._CasestudyService.createCaseStudyModel(
       formData.value
     ).subscribe(
@@ -78,7 +93,9 @@ export class CaseStudyModelsComponent implements OnInit {
           this.error = '';
           this.delete = '';
           this.modalRef.hide()
+          this.loadingAction = false;
           this.showCaseStudyModel();
+
           this.createCaseStudyModel.reset();
         }else{
 

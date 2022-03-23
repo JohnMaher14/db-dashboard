@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/auth.service';
 import { CasestudyService } from 'src/app/services/casestudy.service';
 
 @Component({
@@ -16,6 +18,8 @@ export class CaseStudyModelGalleryComponent implements OnInit {
   indexCaseStudyId!:number;
   caseStudyImage:string='https://digitalbondmena.com/case_study_model_image/';
   modalRef!:BsModalRef;
+  loading:boolean = false;
+  loadingAction:boolean = false;
 
   success: string = '';
   error: string = '';
@@ -27,7 +31,10 @@ export class CaseStudyModelGalleryComponent implements OnInit {
   constructor(
     private _ActivatedRoute:ActivatedRoute,
     private _CasestudyService:CasestudyService,
-        private _BsModalService:BsModalService
+    private _BsModalService:BsModalService,
+    private _AuthService:AuthService,
+    private _Router:Router,
+    private _Title:Title
 
   ) {
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
@@ -35,10 +42,18 @@ export class CaseStudyModelGalleryComponent implements OnInit {
   }
   openModal(template:any){
 
-    this.modalRef = this._BsModalService.show(template);
+    this.modalRef = this._BsModalService.show(template
+      ,{
+        class: 'modal-dialog-centered'
+      }
+
+      );
   }
   ngOnInit(): void {
-    this.showCaseStudyModelImage()
+    this.showCaseStudyModelImage();
+    this._Title.setTitle(`Digital Bond | Case studies model gallery`)
+
+
   }
   showCaseStudyModelImage(){
     this.indexForNumbers = this._ActivatedRoute.snapshot.params["id"];
@@ -67,18 +82,24 @@ export class CaseStudyModelGalleryComponent implements OnInit {
     this.createCaseStudyModelImage.get('image')?.updateValueAndValidity()
   }
   onDelete(id:number , data:any){
+    this.loadingAction = true;
+
     this._CasestudyService.deleteCaseStudyModelImage(id,data ).subscribe(
       (response) => {
         if (response.success) {
           this.delete = response.success
           this.error = ''
           this.success = ''
+          this.loadingAction = false;
+
           this.showCaseStudyModelImage()
         }
       }
     )
   }
   onCreate(){
+    this.loadingAction = true;
+
     this._CasestudyService.createCaseStudyModelImage(
       this.createCaseStudyModelImage.value.en_title,
       this.createCaseStudyModelImage.value.ar_title,
@@ -91,9 +112,11 @@ export class CaseStudyModelGalleryComponent implements OnInit {
           this.success = response.success;
           this.error = '';
           this.delete = '';
-          this.showCaseStudyModelImage();
           this.modalRef.hide();
           this.createCaseStudyModelImage.reset();
+          this.loadingAction = false;
+
+          this.showCaseStudyModelImage();
         }else{
 
           console.log(response);

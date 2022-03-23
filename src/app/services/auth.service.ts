@@ -9,14 +9,14 @@ import { User } from '../content/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-
+  tokenExpirationTime:any;
   currentUserData: any = new BehaviorSubject(null);
   userDataContainer:any[]=[];
   constructor(private _HttpClient: HttpClient , private _Router:Router) {
-    if (localStorage.getItem('currentUser' || '{}')) {
+    if (localStorage.getItem('currentUserToken')) {
       this.saveCurrentUserToken();
-      this._Router.navigate(['/home'])
     }
+
   }
 
 
@@ -26,17 +26,33 @@ export class AuthService {
       loginUserData
     );
   }
-  saveCurrentUserToken() {
-    let encodedToken: any = localStorage.getItem('currentUser' || '{}');
-    this.currentUserData.next(encodedToken)
-    this._Router.navigate(['/home']);
 
+  saveCurrentUserToken() {
+    let encodedToken: any = localStorage.getItem('currentUserToken');
+    this.currentUserData.next(encodedToken)
+
+  }
+  autoLogout(){
+    let encodedExpiresIn: any = localStorage.getItem('currentUserExpiresIn');
+
+    const ExpiresDate: any = new Date(encodedExpiresIn).getTime() - new Date().getTime();
+    if (ExpiresDate && (Date.now() > ExpiresDate)) {
+      this.signOut();
+      this._Router.navigate(['/auth']);
+    }
   }
 
 
   signOut(){
     this.currentUserData.next(null);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserToken');
+    localStorage.removeItem('currentUserExpiresIn');
+    localStorage.removeItem('currentUsername');
     this._Router.navigate(['/auth']);
+    if (this.tokenExpirationTime) {
+      clearTimeout(this.tokenExpirationTime)
+    }
+    this.tokenExpirationTime= null;
+
   }
 }

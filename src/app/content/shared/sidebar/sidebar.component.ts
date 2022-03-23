@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SidebarComponent implements OnInit {
   isLogined:boolean = false;
   constructor(
-    private _AuthService:AuthService
+    private _AuthService:AuthService,
+    private _Renderer2:Renderer2,
+    private _Router:Router
   ) {
     _AuthService.currentUserData.subscribe(()=>{
       if (_AuthService.currentUserData.getValue() == null) {
@@ -22,6 +25,13 @@ export class SidebarComponent implements OnInit {
     })
   }
 
+  navOpen(){
+    let sidebarOverlay = document.querySelector('.sidenav-overlay')
+    this._Renderer2.addClass(document.body,'menu-hide')
+    this._Renderer2.removeClass(document.body,'menu-open')
+    this._Renderer2.removeClass(sidebarOverlay,'d-block')
+
+  }
   ngOnInit(): void {
   }
 

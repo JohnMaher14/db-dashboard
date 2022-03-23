@@ -26,6 +26,7 @@ import { NotfoundComponent } from './content/shared/notfound/notfound.component'
 import { AuthGuard } from './services/auth.guard';
 import { TeamsComponent } from './content/pages/teams/teams.component';
 import { EditTeamComponent } from './content/pages/teams/edit-team/edit-team.component';
+import { MessagesComponent } from './content/pages/messages/messages.component';
 
 const routes: Routes = [
 
@@ -53,6 +54,8 @@ const routes: Routes = [
   {path: 'teams/:id', canActivate:[AuthGuard] , component:EditTeamComponent},
   {path: 'banners', canActivate:[AuthGuard] , component:BannerImagesComponent},
   {path: 'banners/edit/:id', canActivate:[AuthGuard] , component:EditBannersComponent},
+  {path: 'messages', canActivate:[AuthGuard] , component:MessagesComponent},
+
   {path: 'auth', component:AuthComponent},
   {path: '**', component:NotfoundComponent}
 

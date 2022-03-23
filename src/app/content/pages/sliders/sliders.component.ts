@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/auth.service';
 import { SliderService } from 'src/app/services/slider.service';
 
 @Component({
@@ -33,16 +34,21 @@ export class SlidersComponent implements OnInit {
     private _SliderService:SliderService,
     private _Router:Router,
     private _BsModalService:BsModalService,
-    private _Title:Title
+    private _Title:Title,
   ) { }
 
   ngOnInit(): void {
     this.showSliders();
-    this._Title.setTitle(`Digital Bond | Sliders`)
+    this._Title.setTitle(`Digital Bond | Sliders`);
+
   }
   openModal(template:any){
 
-    this.modalRef = this._BsModalService.show(template);
+    this.modalRef = this._BsModalService.show(template
+      ,{
+        class: 'modal-dialog-centered'
+      }
+    );
   }
   sliderForm = new FormGroup({
     en_title : new FormControl('', Validators.required),

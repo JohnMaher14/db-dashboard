@@ -25,9 +25,7 @@ import { EditCasestudyComponent } from './content/pages/casestudy/edit-casestudy
 import { SlidersComponent } from './content/pages/sliders/sliders.component';
 import { EditSlidersComponent } from './content/pages/sliders/edit-sliders/edit-sliders.component';
 import { EditBannersComponent } from './content/pages/banner-images/edit-banners/edit-banners.component';
-import { MatDialogModule } from "@angular/material/dialog";
 import { PaginationModule } from "ngx-bootstrap/pagination";
-import { CarouselModule } from "ngx-owl-carousel-o";
 import { HomeDashboardComponent } from './content/pages/home-dashboard/home-dashboard.component';
 import { ModalModule } from "ngx-bootstrap/modal";
 import { CaseStudyModelsComponent } from './content/pages/case-study-models/case-study-models.component';
@@ -41,6 +39,7 @@ import { AuthComponent } from './content/auth/auth.component';
 import { NotfoundComponent } from './content/shared/notfound/notfound.component';
 import { TeamsComponent } from './content/pages/teams/teams.component';
 import { EditTeamComponent } from './content/pages/teams/edit-team/edit-team.component';
+import { MessagesComponent } from './content/pages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +73,8 @@ import { EditTeamComponent } from './content/pages/teams/edit-team/edit-team.com
     AuthComponent,
     NotfoundComponent,
     TeamsComponent,
-    EditTeamComponent
+    EditTeamComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -83,8 +83,6 @@ import { EditTeamComponent } from './content/pages/teams/edit-team/edit-team.com
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatDialogModule,
-    CarouselModule,
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     NgxPaginationModule

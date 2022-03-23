@@ -51,6 +51,13 @@ export class NavbarComponent implements OnInit {
     });
 
   }
+  openMenu(){
+    this._Renderer2.addClass(document.body,'menu-open')
+    this._Renderer2.removeClass(document.body,'menu-expanded')
+    this._Renderer2.removeClass(document.body,'menu-collapsed')
+
+
+  }
   openSidebar(){
     this._Renderer2.addClass(document.body,'menu-expanded')
     this._Renderer2.removeClass(document.body,'menu-collapsed')
@@ -60,7 +67,6 @@ export class NavbarComponent implements OnInit {
     this._Renderer2.addClass(document.body,'menu-collapsed')
     this._Renderer2.removeClass(document.body,'menu-expanded')
     this.isCollapsed = true
-
   }
   ngOnInit(): void {
     this.elem = document.documentElement;

@@ -9,11 +9,11 @@
 <div class="card"  [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
-      <div class="col-lg-9">
+      <div class="col-9">
 
         <h3 class="mb-0 text-left">{{pageName}}</h3>
       </div>
-      <div class="col-lg-3 text-right">
+      <div class="col-3 text-right">
 
         <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
         <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
@@ -43,7 +43,7 @@
                       <th>Image</th>
 
                       <th class="action_minwidth">Action</th>
-                  </tr> 
+                  </tr>
               </thead>
               <tbody>
 
@@ -51,11 +51,17 @@
                     <td>{{feedback.id}}</td>
                     <td>{{feedback.en_name}}</td>
                     <td>{{feedback.en_role}}</td>
-                    <td *ngIf="fullscreed">{{feedback.en_feedback}}</td>
+                    <td *ngIf="fullscreed">{{feedback.en_feedback | slice:0:125}}</td>
                     <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
-                    <td *ngIf="fullscreed"><img [src]="feedbackImage+feedback.image" width="60px" height="40px" alt=""></td>
+                    <td *ngIf="fullscreed">
+                      <div class="d-flex align-items-center">
 
-                      <td class="row justify-content-center no-gutters">
+                        <img [src]="feedbackImage+feedback.image" width="60px" height="40px" alt="">
+                        <button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button>
+                      </div>
+                    </td>
+
+                      <td class="row justify-content-start no-gutters">
                         <a routerLink="/feedbacks/{{feedback?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
                         <button (click)="onDelete(feedback.id , feedbackImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
                       </td>
@@ -76,7 +82,7 @@
   <!-- Modal -->
 
   <div *ngFor="let feedbackGallery of feedbacks" class="modal fade" id="feedbackGallery{{feedbackGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title mb-0" id="exampleModalLabel">{{feedbackGallery.en_name}}</h5>

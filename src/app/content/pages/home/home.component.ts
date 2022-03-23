@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Title } from '@angular/platform-browser';
 import { HomeService } from 'src/app/services/home.service';
 
 @Component({
@@ -16,11 +16,13 @@ export class HomeComponent implements OnInit {
     this.fullscreed = !this.fullscreed;
   }
   constructor(
-    private _HomeService:HomeService
+    private _HomeService:HomeService,
+    private _title:Title
   ) { }
 
   ngOnInit(): void {
     this.showHome()
+    this._title.setTitle('Digital Bond | Home page')
   }
   showHome(){
     this.loading = true
@@ -32,24 +34,5 @@ export class HomeComponent implements OnInit {
       }
     )
   }
-  mainSlider: OwlOptions = {
-    loop: true,
-    dots: false,
-    autoplay: false,
-    navSpeed: 700,
-    nav: false,
 
-    responsive: {
-      0: {
-        items: 1
-      },
-      450: {
-        items: 1
-      },
-
-      1024: {
-        items: 1
-      }
-    }
-  }
 }

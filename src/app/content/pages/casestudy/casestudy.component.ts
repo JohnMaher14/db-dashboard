@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CasestudyService } from 'src/app/services/casestudy.service';
 
@@ -24,11 +25,13 @@ export class CasestudyComponent implements OnInit {
   }
   constructor(
     private _CasestudyService:CasestudyService,
-    private _BsModalService:BsModalService
+    private _BsModalService:BsModalService,
+    private _Title:Title
   ) { }
 
   ngOnInit(): void {
     this.showCaseStudy()
+    this._Title.setTitle(`Digital Bond | Case studies`)
   }
 
   createCaseStudy = new FormGroup({
@@ -56,7 +59,11 @@ export class CasestudyComponent implements OnInit {
   }
   openModal(template:any){
 
-    this.modalRef = this._BsModalService.show(template);
+    this.modalRef = this._BsModalService.show(template
+      ,{
+        class: 'modal-dialog-centered'
+      }
+);
   }
   showCaseStudy(){
     this.loading = true
@@ -69,6 +76,8 @@ export class CasestudyComponent implements OnInit {
     )
   }
   onDelete(id:number , data:any){
+    if(confirm(`Are you sure to delete case study with id ${id}`)) {
+
     this.loadingAction = true;
 
     this._CasestudyService.deleteClient(id,data ).subscribe(
@@ -84,6 +93,7 @@ export class CasestudyComponent implements OnInit {
         }
       }
     )
+    }
   }
   onCreate(){
     this.loadingAction = true;

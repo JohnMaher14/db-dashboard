@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import {AboutService} from 'src/app/services/about.service'
 @Component({
   selector: 'app-about-us',
@@ -20,26 +19,7 @@ export class AboutUsComponent implements OnInit {
     private _AboutService:AboutService,
     private _Title:Title
   ) { }
-  mainSlider: OwlOptions = {
-    loop: true,
-    dots: false,
-    autoplay: false,
-    navSpeed: 700,
-    nav: false,
 
-    responsive: {
-      0: {
-        items: 1
-      },
-      450: {
-        items: 1
-      },
-
-      1024: {
-        items: 1
-      }
-    }
-  }
 
   showAboutus(){
     this.loading = true

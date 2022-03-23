@@ -17,22 +17,28 @@ export class AuthComponent implements OnInit {
     private _AuthService:AuthService,
     private _Router:Router,
     private _Title:Title
-  ) { }
+  ) {
+
+  }
   auth = new FormGroup({
     'email': new FormControl('', [Validators.required, Validators.email]),
     'password': new FormControl('', Validators.required),
   })
   ngOnInit(): void {
     this._Title.setTitle(`Digital bond | Login`)
-
+    if (localStorage.getItem('currentUserToken') !== null) {
+      this._Router.navigate(['/home'])
+    }
   }
   submit(auth:FormGroup){
     this.actionLoader = true
     this._AuthService.login(auth.value).subscribe(
       (response) => {
         if (response.message === 'sucess') {
-          localStorage.setItem('currentUser', JSON.stringify(response));
+          localStorage.setItem('currentUserToken', JSON.stringify(response.access_token));
           localStorage.setItem('currentUsername', JSON.stringify(response.user.name));
+          localStorage.setItem('currentUserExpiresIn', JSON.stringify(response.expires_in));
+          // sess
           this._AuthService.saveCurrentUserToken();
           this._Router.navigate(['/home']);
           this.actionLoader = false;

@@ -10,10 +10,10 @@
     <div
       class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters"
     >
-      <div class="col-lg-9">
+      <div class="col-9">
         <h3 class="mb-0 text-left">{{ pageName }}</h3>
       </div>
-      <div class="col-lg-3 text-right">
+      <div class="col-3 text-right">
         <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
         <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
 
@@ -60,10 +60,20 @@
                   </button>
                 </td>
 
-                <td *ngIf="fullscreed"><img [src]="sliderImage+slider.image" width="100px" alt=""></td>
+                <td *ngIf="fullscreed">
+                  <img [src]="sliderImage+slider.image" width="50px" height="40px" alt="">
+                  <button
+                  type="button"
+                  [attr.data-toggle]="'modal'"
+                  [attr.data-target]="['#sliderGallery' + slider.id]"
+                  class="btn btn-primary text-white"
+                  >
+                  <i class="la la-search fw-600" aria-hidden="true"></i>
+                </button>
+                </td>
                 <!-- <td>{{CaseStudy.type}}</td> -->
 
-                <td class=" row justify-content-center no-gutters" [ngClass]="{'action_slider': fullscreed}">
+                <td class=" d-flex justify-content-start">
                   <a
                     routerLink="/sliders/{{ slider?.id }}"
                     class="btn btn-round mr-1 btn-success"
@@ -185,7 +195,7 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title mb-0" id="exampleModalLabel">

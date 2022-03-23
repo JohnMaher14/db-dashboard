@@ -32,7 +32,12 @@ export class FeedbacksComponent implements OnInit {
   ) { }
     openModal(template:any){
 
-      this.modalRef = this.modalService.show(template);
+      this.modalRef = this.modalService.show(template
+        ,{
+          class: 'modal-dialog-centered'
+        }
+
+        );
     }
 
   showFeedbacks(){

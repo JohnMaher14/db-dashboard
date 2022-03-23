@@ -31,13 +31,23 @@
               "src/assets"
             ],
             "styles": [
-
+              "node_modules/line-awesome/dist/font-awesome-line-awesome/css/all.min.css",
+              "src/assets/app-assets/vendors/css/vendors.min.css",
+              "src/assets/app-assets/css/bootstrap.min.css",
+              "src/assets/app-assets/css/bootstrap-extended.min.css",
+              "src/assets/app-assets/css/colors.min.css",
+              "src/assets/app-assets/css/components.min.css",
+              "src/assets/app-assets/css/core/menu/menu-types/vertical-menu-modern.css",
+              "src/assets/app-assets/fonts/simple-line-icons/style.min.css",
+              "src/assets/app-assets/css/core/colors/palette-gradient.min.css",
+              "src/assets/app-assets/css/pages/login-register.min.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "src/assets/app-assets/vendors/js/vendors.min.js",
+              "src/assets/app-assets/js/core/app-menu.min.js",
+              "src/assets/app-assets/js/core/app.min.js",
+              "src/assets/scripts/scripts.js"
             ]
           },
           "configurations": {
@@ -45,8 +55,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

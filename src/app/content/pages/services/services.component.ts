@@ -30,8 +30,11 @@ export class ServicesComponent implements OnInit {
     private _Title:Title
   ) { }
   openModal(template: any) {
-    this.modalRef = this.modalService.show(template);
-  }
+    this.modalRef = this.modalService.show(template
+      ,{
+        class: 'modal-dialog-centered'
+      }
+  )}
   ngOnInit(): void {
     this.showServices()
     this._Title.setTitle(`Digital Bond | Services`)

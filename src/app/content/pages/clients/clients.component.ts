@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+
 import { Title } from '@angular/platform-browser';
 import { BsModalService , BsModalRef} from 'ngx-bootstrap/modal';
 import { ClientsService } from 'src/app/services/clients.service';
@@ -39,7 +38,6 @@ export class ClientsComponent implements OnInit {
   }
   constructor(
     private _ClientsService:ClientsService,
-    public _MatDialog:MatDialog,
     private _Title:Title,
 
     public modalService: BsModalService  ) {
@@ -72,8 +70,11 @@ export class ClientsComponent implements OnInit {
     this.createClient.get('logo')?.updateValueAndValidity()
   }
   openModal(template: any) {
-    this.modalRef = this.modalService.show(template);
-  }
+    this.modalRef = this.modalService.show(template
+      ,{
+        class: 'modal-dialog-centered'
+      }
+  )}
   pageChanged(event:any){
     this.config.currentPage = event;
   }

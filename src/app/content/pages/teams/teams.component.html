@@ -9,14 +9,14 @@
 <div class="card"  [ngClass]="{'card-fullscreen': fullscreed}">
   <div class="card-content collapse show">
     <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
-      <div class="col-lg-9">
+      <div class="col-9">
 
         <h3 class="mb-0 text-left">{{pageName}}</h3>
       </div>
-      <div class="col-lg-3 text-right">
+      <div class="col-3 text-right">
 
         <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn btn-gow btn-light mx-2"><i class="ficon ft-maximize"></i></button>
-        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-gow btn-light"><i class="ficon ft-minimize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn btn-gow btn-light mx-2"><i class="ficon ft-minimize"></i></button>
         <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
       </div>
     </div>
@@ -49,7 +49,7 @@
               </thead>
               <tbody>
 
-                  <tr *ngFor="let team of teams">
+                  <tr *ngFor="let team of teams | paginate: { itemsPerPage: 5, currentPage: page }">
                     <td>{{team.id}}</td>
                     <td>{{team.en_name}}</td>
                     <td>{{team.en_role}}</td>
@@ -57,9 +57,12 @@
                     <td *ngIf="fullscreed">{{team.instagram}}</td>
                     <td *ngIf="fullscreed">{{team.twitter}}</td>
                     <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#teamGallery'+team.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
-                    <td *ngIf="fullscreed"><img [src]="teamImage+team.image" width="60px" height="40px" alt=""></td>
+                    <td *ngIf="fullscreed">
+                      <img [src]="teamImage+team.image" width="60px" height="40px" alt="">
+                      <button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#teamGallery'+team.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button>
+                    </td>
 
-                      <td class="row justify-content-center no-gutters">
+                      <td class="row justify-content-start no-gutters">
                         <a routerLink="/feedbacks/{{team?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
                         <button (click)="onDelete(team.id , teamImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
                       </td>
@@ -70,7 +73,9 @@
               </tbody>
 
               </table>
+              <pagination-controls [maxSize]="5"  (pageChange)="page = $event" >
 
+              </pagination-controls>
           </div>
 
     </div>
@@ -78,7 +83,7 @@
   <!-- Modal -->
 
   <div *ngFor="let teamGallery of teams" class="modal fade" id="teamGallery{{teamGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title mb-0" id="exampleModalLabel">{{teamGallery.en_name}}</h5>
