@@ -67,8 +67,8 @@ export class CaseStudyModelsComponent implements OnInit {
     case_id : new FormControl('', Validators.required),
   })
   onDelete(id:number , data:any){
-    // if(con)
-    this.loadingAction = true;
+    if(confirm(`Are you sure to delete case study model with id ${id}`)) {
+      this.loadingAction = true;
     this._CasestudyService.deleteCaseStudyModel(id,data ).subscribe(
       (response) => {
         if (response.success) {
@@ -81,6 +81,7 @@ export class CaseStudyModelsComponent implements OnInit {
         }
       }
     )
+    }
   }
   onCreate(formData:FormGroup){
     this.loadingAction = true;

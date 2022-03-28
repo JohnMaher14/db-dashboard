@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="media d-flex">
             <div class="media-body text-left">
-              <h3 class="info">{{ clientsStatistics }}</h3>
+              <h3 class="info">{{ caseStudyStatistics }}</h3>
               <h4>Case studies</h4>
             </div>
             <div>
@@ -35,7 +35,7 @@
         <div class="card-body">
           <div class="media d-flex">
             <div class="media-body text-left">
-              <h3 class="warning">{{ caseStudyStatistics }}</h3>
+              <h3 class="warning">{{  clientsStatistics }}</h3>
               <h4>Clients</h4>
             </div>
             <div>
@@ -85,7 +85,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-7">
+  <div class="col-lg-8">
     <div class="card">
       <div
         class="card-header bg-primary bg-darken-2 white align-items-center card-title-bold text-capitalize row no-gutters"
@@ -98,7 +98,7 @@
             <a routerLink="/messages" class="btn btn-light w-100" >View messages</a>
           </div>
       </div>
-      <div class="card-content" style="max-height: 267.5px; overflow: auto">
+      <div class="card-content" style="max-height: 250px; overflow: auto">
         <div class="table-responsive">
           <table
             id="recent-orders"
@@ -106,6 +106,7 @@
           >
             <thead>
               <tr>
+                <th class="border-top-0">#</th>
                 <th class="border-top-0">Name</th>
                 <th class="border-top-0">Date</th>
                 <th class="border-top-0">View</th>
@@ -113,6 +114,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let message of clientMessages|slice:0:10">
+                <td class="text-truncate">{{ message.id }}</td>
                 <td class="text-truncate">{{ message.name }}</td>
                 <td class="text-truncate">
                   {{ message.created_at | date: "medium" }}
@@ -137,7 +139,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-5">
+  <div class="col-lg-4">
     <div class="card">
       <div class="card-content">
         <img
@@ -158,66 +160,66 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title mb-0" id="exampleModalLabel">
-          {{ messageModal.name }}
-        </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h4>Name:</h4>
-                <p>{{ messageModal.name  | slice:0:24 }}</p>
-              </div>
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title mb-0" id="exampleModalLabel">
+        Message details
+      </h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="las la-address-card"></i> Name:</h4>
+              <p>{{ messageModal.name  | slice:0:24 }}</p>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h4>Email:</h4>
-                <p>{{ messageModal.email | slice:0:20 }}</p>
-              </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="las la-at"></i> Email:</h4>
+              <p>{{ messageModal.email | slice:0:20 }}</p>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h4>Phone:</h4>
-                <p>{{ messageModal.phone | slice:0:24 }}</p>
-              </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="las la-phone-volume"></i> Phone:</h4>
+              <p>{{ messageModal.phone | slice:0:24 }}</p>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h4>Date:</h4>
-                <p>{{ messageModal.created_at  | slice:0:24 }}</p>
-              </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="las la-calendar"></i> Date:</h4>
+              <p>{{ messageModal.created_at  | slice:0:24 }}</p>
             </div>
           </div>
+        </div>
 
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <h4>Message:</h4>
-                <p>{{ messageModal.message }}</p>
-              </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="las la-comments"></i> Message:</h4>
+              <p>{{ messageModal.message }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>

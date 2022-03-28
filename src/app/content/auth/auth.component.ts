@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this._Title.setTitle(`Digital bond | Login`)
     if (localStorage.getItem('currentUserToken') !== null) {
-      this._Router.navigate(['/home'])
+      this._Router.navigate(['/dashboard'])
     }
   }
   submit(auth:FormGroup){
@@ -40,7 +40,7 @@ export class AuthComponent implements OnInit {
           localStorage.setItem('currentUserExpiresIn', JSON.stringify(response.expires_in));
           // sess
           this._AuthService.saveCurrentUserToken();
-          this._Router.navigate(['/home']);
+          this._Router.navigate(['/dashboard']);
           this.actionLoader = false;
 
         }

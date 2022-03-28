@@ -52,7 +52,15 @@
                     <tr *ngFor="let client of clients | paginate: { itemsPerPage: 5, currentPage: page }">
                         <td>{{client.id}}</td>
                         <td>{{client.en_title}}</td>
-                        <td>{{client.type}}</td>
+                        <td>
+                          <ng-container *ngIf="client.type === 'case'">
+                            Client
+                          </ng-container>
+                          <ng-container *ngIf="client.type === 'happy'">
+                            Partner
+                          </ng-container>
+
+                        </td>
                         <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#clientGallery'+client.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
                         <td *ngIf="fullscreed"><img [src]="clientImage+client.logo" width="50px" height="40px" alt="">
                           <button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#clientGallery'+client.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button>
@@ -203,8 +211,8 @@
               <label for="type">Type</label>
               <select id="type" class="form-control" name="type" formControlName="type">
                 <option value="">Select type</option>
-                <option value="happy">Happy</option>
-                <option value="case">Case</option>
+                <option value="happy">Partner</option>
+                <option value="case">Client</option>
               </select>
             </div>
           </div>

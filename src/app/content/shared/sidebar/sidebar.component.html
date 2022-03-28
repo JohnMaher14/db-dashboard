@@ -2,11 +2,10 @@
   <div class="main-menu-content">
     <ul (click)="navOpen()" class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-      <li class="nav-item" routerLinkActive="active" title="Home">
-        <a routerLink="/home">
-          <i class="la la-home"></i>
-
-          <span class="menu-title" data-i18n="">Home</span>
+      <li class="nav-item" routerLinkActive="active" title="Dashboard">
+        <a routerLink="/dashboard">
+          <i class="las la-chart-pie"></i>
+          <span class="menu-title" data-i18n="">Dashboard</span>
         </a>
       </li>
       <li class="nav-item" routerLinkActive="active" title="Home Page">
@@ -14,6 +13,14 @@
           <i class="las la-house-damage"></i>
 
           <span class="menu-title" data-i18n="">Home Page</span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" title="Sliders">
+        <a routerLink="/sliders">
+          <i class="las la-images"></i>
+
+          <span class="menu-title" data-i18n="">Sliders</span>
+
         </a>
       </li>
       <li class="nav-item" routerLinkActive="active" title="About us">
@@ -55,14 +62,7 @@
 
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" title="Sliders">
-        <a routerLink="/sliders">
-          <i class="las la-images"></i>
 
-          <span class="menu-title" data-i18n="">Sliders</span>
-
-        </a>
-      </li>
       <li class="nav-item" routerLinkActive="active" title="Teams">
         <a routerLink="/teams">
           <i class="las la-users-cog"></i>

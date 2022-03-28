@@ -30,8 +30,8 @@ import { MessagesComponent } from './content/pages/messages/messages.component';
 
 const routes: Routes = [
 
-  {path: '', redirectTo:'home' ,pathMatch:'full'},
-  {path: 'home', canActivate:[AuthGuard] , component:HomeDashboardComponent},
+  {path: '', redirectTo:'dashboard' ,pathMatch:'full'},
+  {path: 'dashboard', canActivate:[AuthGuard] , component:HomeDashboardComponent},
   {path: 'home-page', canActivate:[AuthGuard] , component:HomeComponent},
   {path: 'home-page/edit/:id', canActivate:[AuthGuard] , component:EditHomeComponent},
   {path: 'about-us', canActivate:[AuthGuard] , component:AboutUsComponent},

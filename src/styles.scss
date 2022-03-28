@@ -30,10 +30,29 @@ $secondaryColor: #ed2924;
     margin-top:18px !important
   }
 }
+.table{
+  &.about{
+
+    td{
+      white-space: nowrap;
+      vertical-align: middle;
+      max-width: 100%;
+      border-collapse: collapse;
+      vertical-align: middle;
+
+    }
+    th{
+      vertical-align: middle;
+      min-width: none;
+    }
+  }
+}
+
 .table td,
 .table th{
   vertical-align: middle;
 }
+
 .slider{
   h4{
     text-align:center
@@ -73,10 +92,29 @@ $secondaryColor: #ed2924;
 
   }
 }
+.app-content{
+
+  &.content{
+    display: flex;
+    align-items: center;
+  }
+  .content-wrapper{
+    width: 100%;
+  }
+}
+.navbar-flexbox-container{
+  top:unset;
+  height: unset;
+}
 .image_card_home{
-  height: 350px;
+  height: 332px;
   object-fit: contain;
   width: 100%;
+}
+.card {
+  .card{
+    box-shadow: 0 2px 18px 1px rgb(49 53 72 / 10%) !important;
+  }
 }
 .loader {
   position: fixed;
@@ -183,6 +221,7 @@ position:relative;
 .action{
 
   &_minwidth{
+
     min-width: 181px;
   }
 

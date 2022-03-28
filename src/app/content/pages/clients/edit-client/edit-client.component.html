@@ -39,9 +39,14 @@
               <div class="form-group">
                 <label for="type">Type</label>
                 <select id="type" class="form-control" name="type" formControlName="type" [(ngModel)]="client.type" >
-                  <option class="d-none" [selected]="client.type">{{client.type}}</option>
-                  <option value="happy">Happy</option>
-                  <option value="case">Case</option>
+                  <option class="d-none" [selected]="client.type">
+                    <ng-container *ngIf="client.type === 'happy'">Partner</ng-container>
+                    <ng-container *ngIf="client.type === 'case'">Client</ng-container>
+
+
+                  </option>
+                  <option value="happy">Partner</option>
+                  <option value="case">Client</option>
                 </select>
               </div>
             </div>

@@ -5,7 +5,7 @@
   <div class="navbar-wrapper">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row d-flex align-items-center">
-        <li class="nav-item mobile-menu d-lg-none mr-auto" (click)="openMenu()">
+        <li class="nav-item mobile-menu d-lg-none mr-auto" (click)="openMenu()" *ngIf="isLogined">
           <a class="nav-link nav-menu-main menu-toggle hidden-xs"
             ><i class="ft-menu font-large-1"></i
           ></a>
@@ -21,7 +21,7 @@
           >
         </li>
 
-        <li class="nav-item d-lg-none">
+        <li class="nav-item d-lg-none" *ngIf="isLogined">
           <a
             class="nav-link open-navbar-container"
             data-toggle="collapse"
@@ -34,6 +34,8 @@
     <div class="navbar-container content">
       <div class="collapse navbar-collapse" id="navbar-mobile">
         <ul class="nav navbar-nav mr-auto float-left">
+          <ng-container *ngIf="isLogined">
+
           <li class="nav-item d-none d-lg-block nav-toggle" *ngIf="!isCollapsed" (click)="collpaseSidebar()">
             <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"
               ><i
@@ -43,7 +45,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-lg-block nav-toggle" *ngIf="isCollapsed" (click)="openSidebar()">
-            <a class="nav-link modern-nav-toggle pr-0" data-toggle="expand"
+            <a class="nav-link modern-nav-toggle pr-0"  data-toggle="expand"
               ><i
                 class="toggle-icon ft-toggle-right font-medium-3"
                 data-ticon="ft-toggle-right"
@@ -54,18 +56,20 @@
             <!-- <a class="nav-link nav-link-expand" (click)="GoFullScreen()"
               ><i class="ficon ft-maximize"></i
             ></a> -->
-            <a class="nav-link nav-link-expand" *ngIf="!isFullScreen" (click)="openFullscreen()"
-              ><i class="ficon ft-maximize"></i
-            ></a>
-            <a class="nav-link nav-link-expand" *ngIf="isFullScreen" (click)="closeFullscreen()"
-              ><i class="ficon ft-minimize"></i
-            ></a>
+
+              <a class="nav-link nav-link-expand" *ngIf="!isFullScreen" (click)="openFullscreen()"
+                ><i class="ficon ft-maximize"></i
+              ></a>
+              <a class="nav-link nav-link-expand" *ngIf="isFullScreen" (click)="closeFullscreen()"
+                ><i class="ficon ft-minimize"></i
+              ></a>
+
           </li>
+        </ng-container>
+
         </ul>
         <ul class="nav navbar-nav float-right">
-          <li *ngIf="!isLogined" class="dropdown dropdown-user nav-item">
-            <p class="mb-0">You ar not logined</p>
-          </li>
+
           <li *ngIf="isLogined" class="dropdown dropdown-user nav-item">
             <a
               class="dropdown-toggle nav-link dropdown-user-link"

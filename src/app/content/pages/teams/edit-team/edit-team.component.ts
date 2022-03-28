@@ -34,7 +34,7 @@ export class EditTeamComponent implements OnInit {
 
     this._TeamService.getTeamDetails(this.indexForNumbers).subscribe(
       (response) => {
-        this.team = response.feedback
+        this.team = response.row
       }
     )
   }

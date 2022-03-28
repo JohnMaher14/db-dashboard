@@ -15,6 +15,7 @@ export class MessagesComponent implements OnInit {
   delete: string = '';
   messages: any[] =[];
   modalRef!:BsModalRef;
+  seeMore = false;
   pageName: string ='Messages';
   fullscreed: boolean = false;
   loading: boolean = false;
