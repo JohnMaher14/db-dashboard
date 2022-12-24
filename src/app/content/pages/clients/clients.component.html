@@ -1,0 +1,441 @@
+
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="" *ngIf="loadingAction">
+  <app-loader-action></app-loader-action>
+</div>
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
+
+  <div class="card-content collapse show">
+    <div class="card-header bg-primary bg-darken-2 text-center card-title-bold text-capitalize ">
+      <div class="row align-items-center ">
+
+        <div class="col-6">
+
+          <h3 class="mb-0 text-left">{{pageName}}</h3>
+        </div>
+        <div class="col-2">
+          <select name="" (change)="onChangeTypeFilter($event)" class="form-control" id="">
+            <option value="">Filter by type</option>
+            <option value="case">Clients</option>
+            <option value="happy">Partner</option>
+          </select>
+        </div>
+        <div class="col-4">
+          <div class="row no-gutters">
+            <div class="col-md-7">
+              <input name="" [(ngModel)]="term" class="form-control" id="" placeholder="Search for clients">
+            </div>
+            <div class="col-md-5">
+              <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
+              <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
+              <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+
+
+
+          </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="success" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+      <div *ngIf="delete" class="alert alert-danger" role="alert">
+        {{delete}}
+      </div>
+
+      <div class="card-content collapse show">
+        <div class="card-body card-dashboard table-responsive" style="max-height: 65vh;position: relative; ">
+          <ng-container *ngIf="(clients | search: term) as clients">
+              <table class="table table-striped table-bordered dom-jQuery-events">
+                <thead style="position: sticky; top: -22px; background-color: #fff;" *ngIf="clients.length !== 0">
+                    <tr>
+                        <th>id</th>
+                        <th>En Title</th>
+                        <th>Ar Title</th>
+                        <th>Type</th>
+                        <th>Priority number</th>
+                        <th>Image</th>
+
+                        <th class="action_minwidth">Action</th>
+                      </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let client of clients">
+                        <td>{{client.id}}</td>
+                        <td>{{client.en_title}}</td>
+                        <td>{{client.ar_title}}</td>
+                        <td>
+
+                          {{client.type === 'case' ? 'Client' : 'Partner'}}
+                        </td>
+                        <td>{{client.priority_number}}</td>
+
+                        <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#clientGallery'+client.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
+                        <td *ngIf="fullscreed"><img [src]="clientImage+client.logo" width="50px" height="40px" alt="">
+                          <button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#clientGallery'+client.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button>
+                        </td>
+
+                        <td class="row justify-content-start no-gutters">
+                          <!-- <a routerLink="/clients/{{client?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a> -->
+                          <button type="button" (click)="onEdit(client.id , updateModal)" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></button>
+                          <button (click)="onDelete(client.id , clientImage)" class="btn btn-round mr-1 btn-danger"><i class="la la-trash"></i></button>
+                        </td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+                <h4 *ngIf="clients.length === 0" class="text-center">{{ 'No clients found' }}</h4>
+
+              </ng-container>
+
+          </div>
+
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<!-- <div  class="modal fade" id="createClient" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create client</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="createClient" (ngSubmit)="onCreate()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+
+                <div class="form-group">
+                  <label for="en_title">En title</label>
+                  <input id="en_title" class="form-control" type="text" name="en_title" formControlName="en_title">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="ar_title">Ar title</label>
+                  <input id="ar_title" class="form-control" type="text" name="ar_title" formControlName="ar_title">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="en_text">En text</label>
+                  <input id="en_text" class="form-control" type="text" name="en_text" formControlName="en_text">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="ar_text">Ar text</label>
+                  <input id="ar_text" class="form-control" type="text" name="ar_text" formControlName="ar_text">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="type">Type</label>
+                  <select id="type" class="form-control" name="type" formControlName="type">
+                    <option value="">Select type</option>
+                    <option value="happy">Happy</option>
+                    <option value="case">Case</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="icon">icon</label>
+                  <input id="icon" (change)="logo($event)" class="form-control" type="file" name="icon">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="createClient.invalid">Save changes</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div> -->
+<div *ngFor="let clientGallery of clients" class="modal fade" id="clientGallery{{clientGallery.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mb-0" id="exampleModalLabel">{{clientGallery.en_title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <img [src]="clientImage+clientGallery.logo" class="w-100" alt="">
+          </div>
+
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<ng-template #updateModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Update {{modalEdit?.en_title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createClient" (ngSubmit)="onUpdate(modalEdit?.id , createClient)">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label for="en_title">En title</label>
+              <input id="en_title" class="form-control" type="text" name="en_title" formControlName="en_title"
+              [ngModel]="modalEdit?.en_title"
+              >
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_title">Ar title</label>
+              <input id="ar_title" class="form-control" type="text" name="ar_title" formControlName="ar_title"
+              [ngModel]="modalEdit?.ar_title"
+
+              >
+            </div>
+          </div>
+          <!-- <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_title">Ar title</label>
+              <input id="ar_title" class="form-control" type="text" name="ar_title" formControlName="ar_title"
+              [ngModel]="modalEdit?.ar_title"
+
+              >
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_text">En text</label>
+              <textarea id="en_text" class="form-control" type="text" name="en_text" formControlName="en_text"
+              [ngModel]="modalEdit?.en_text"
+
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_text">Ar text</label>
+              <input id="ar_text" class="form-control" type="text" name="ar_text" formControlName="ar_text"
+              [ngModel]="modalEdit?.ar_text"
+
+              >
+            </div>
+          </div> -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type" (change)="onChangeType($event)" class="form-control" name="type" formControlName="type"
+              [ngModel]="modalEdit?.type"
+
+              >
+                <option value="">Select type</option>
+                <option value="happy">Partner</option>
+                <option value="case">Client</option>
+                <option value="test">Test</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="checboxes || modalEdit?.type == 'case'">
+            <div class="form-group">
+              <label for="priority_number">Priority number</label>
+              <select id="priority_number" class="form-control" name="priority_number" formControlName="priority_number" [ngModel]="modalEdit?.priority_number">
+                <option value="">Select number</option>
+                <option value="{{number}}" *ngFor="let number of priorityNumber | slice:-11">{{number}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- <input type="hidden" name="logo" formControlName="logo" [ngModel]="modalEdit?.logo"> -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="icon">icon</label>
+              <input id="icon" (change)="logo($event)" class="form-control" type="file" name="icon">
+            </div>
+          </div>
+          <div class="col-12" *ngIf="checboxes || modalEdit?.type == 'case'">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="d-inline-block custom-control custom-checkbox mr-1">
+                  <input type="checkbox"
+                  (change)="onChangeSocial($event)"
+                  class="custom-control-input" formControlName="social_media_status" id="social_media_status"
+                  [ngModel]="modalEdit?.social_media_status"
+
+                  >
+                  <label class="custom-control-label" for="social_media_status">Social media</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-inline-block custom-control custom-checkbox mr-1">
+                  <input type="checkbox"
+                  (change)="onChangeMobile($event)"
+                  class="custom-control-input" formControlName="mobile_app_status" id="mobile_app_status"
+                  [ngModel]="modalEdit?.mobile_app_status"
+
+                  >
+                  <label class="custom-control-label" for="mobile_app_status">Mobile app</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-inline-block custom-control custom-checkbox mr-1">
+                  <input type="checkbox"
+                  (change)="onChangeWeb($event)"
+
+                  class="custom-control-input" formControlName="web_dev_status" id="web_dev_status"
+                  [ngModel]="modalEdit?.web_dev_status"
+
+                  >
+                  <label class="custom-control-label" for="web_dev_status">Web Dev</label>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="createClient.invalid">Save changes</button>
+      </div>
+  </form>
+  </div>
+</ng-template>
+<ng-template #createModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Create client</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createClient" (ngSubmit)="onCreate(createClient)">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label for="en_title">En title</label>
+              <input id="en_title" class="form-control" type="text" name="en_title" formControlName="en_title">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_title">Ar title</label>
+              <input id="ar_title" class="form-control" type="text" name="ar_title" formControlName="ar_title">
+            </div>
+          </div>
+          <!-- <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_text">En text</label>
+              <textarea id="en_text" class="form-control" type="text" name="en_text" formControlName="en_text"></textarea>
+            </div>
+          </div>
+           <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_text">Ar text</label>
+              <input id="ar_text" class="form-control" type="text" name="ar_text" formControlName="ar_text">
+            </div>
+          </div> -->
+
+          <div class="col-md-6"  >
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type" (change)="onChangeType($event)" class="form-control" name="type" formControlName="type">
+                <option value="">Select type</option>
+                <option value="happy">Partner</option>
+                <option value="case">Client</option>
+                <option value="test">Test</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="checboxes">
+            <div class="form-group">
+              <label for="priority_number">Priority number</label>
+              <select id="priority_number" class="form-control" name="priority_number" formControlName="priority_number">
+                <option value="">Select number</option>
+                <option value="{{number}}" *ngFor="let number of priorityNumber | slice:-11">{{number}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="icon">icon</label>
+              <input id="icon"  (change)="logo($event)" class="form-control" type="file" name="icon">
+            </div>
+          </div>
+          <div class="col-12" *ngIf="checboxes">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="d-inline-block custom-control custom-checkbox mr-1">
+                  <input type="checkbox"
+                  (change)="onChangeSocial($event)"
+                  class="custom-control-input" formControlName="social_media_status" id="social_media_status">
+                  <label class="custom-control-label" for="social_media_status">Social media</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-inline-block custom-control custom-checkbox mr-1">
+                  <input type="checkbox"
+                  (change)="onChangeMobile($event)"
+                  class="custom-control-input" formControlName="mobile_app_status" id="mobile_app_status">
+                  <label class="custom-control-label" for="mobile_app_status">Mobile app</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-inline-block custom-control custom-checkbox mr-1">
+                  <input type="checkbox"
+                  (change)="onChangeWeb($event)"
+
+                  class="custom-control-input" formControlName="web_dev_status" id="web_dev_status">
+                  <label class="custom-control-label" for="web_dev_status">Web Dev</label>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="createClient.invalid">Save changes</button>
+      </div>
+  </form>
+  </div>
+</ng-template>
+<!-- <div class="modal fade" *ngFor="let clientModal of clients" id="updateclient{{clientModal.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create client</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div> -->

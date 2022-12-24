@@ -1,0 +1,18 @@
+
+<app-navbar></app-navbar>
+<app-sidebar *ngIf="isLogined"></app-sidebar>
+<div class="app-content content" [ngClass]="{'ml-0': !isLogined}">
+  <div class="content-wrapper">
+    <div class="content-body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+<app-footer></app-footer>
+<!-- <div class="loader center-block">
+  <div class="loader-container">
+    <img src="assets/images/white.png" width="100px" class="main-logo-loader">
+  </div>
+</div> -->

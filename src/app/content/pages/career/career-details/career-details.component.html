@@ -1,0 +1,419 @@
+
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="" *ngIf="loadingAction">
+  <app-loader-action></app-loader-action>
+</div>
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
+  <div class="card-content collapse show">
+    <div
+      class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters"
+    >
+      <div class="col-9">
+        <h3 class="mb-0 text-left">{{ currentJob?.en_title }}</h3>
+      </div>
+      <div class="col-3 text-right">
+
+        <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-maximize"></i></button>
+        <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 mx-2 btn-light"><i class="ficon ft-minimize"></i></button>
+      <button (click)="openModal(createModal)" class="btn btn-light"><i class="la la-plus" aria-hidden="true"></i></button>
+
+      </div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="success" class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      <div *ngIf="delete" class="alert alert-danger" role="alert">
+        {{ delete }}
+      </div>
+
+      <div class="card-content collapse show">
+        <div class="card-body card-dashboard table-responsive">
+          <table class="table table-striped table-bordered dom-jQuery-events" *ngIf="currentJob?.job_data_re.length > 0">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Status</th>
+
+                <th class="action_minwidth" style="    min-width: 243px;
+                ">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let job of currentJob?.job_data_re">
+                <td>{{ job.id }}</td>
+                <td>{{ job.en_job_desc_title }}</td>
+                <td [title]="job.en_about_job_text " class="text-overflow">{{ job.en_about_job_text }}</td>
+                <td ><span class="btn" [ngClass]="job.job_status === 0 ? 'btn-danger' : 'btn-success'">{{job.job_status === 0 ? 'Hidden' : 'Visible'}}</span></td>
+
+
+                <td class="row justify-content-start no-gutters">
+                  <button (click)="onEdit(job.id, updateModal)"
+
+                    class="btn btn-round mr-1 btn-info"
+                    ><i class="la la-edit"></i
+                  ></button>
+                  <button
+                    (click)="onDisable(job.id)"
+                    *ngIf="job.job_status == 1"
+                    class="btn btn-round mr-1 btn-warning"
+                  >
+                    <i class="la la-eye-slash"></i>
+                  </button>
+                  <button
+                    (click)="onRecover(job.id)"
+                    *ngIf="job.job_status == 0"
+                    class="btn btn-round mr-1 btn-success"
+                  >
+                    <i class="la la-eye"></i>
+                  </button>
+                  <button
+                    (click)="onDelete(job.id)"
+                    class="btn btn-round mr-1 btn-danger"
+                  >
+                    <i class="la la-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="text-center" *ngIf="currentJob?.job_data_re.length < 1">No data for this category</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+
+
+</div>
+<ng-template #createModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Create job category</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createJob" (ngSubmit)="onCreate(createJob)">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_job_desc_title">En title</label>
+              <input
+                id="en_job_desc_title"
+                class="form-control"
+                type="text"
+                name="en_job_desc_title"
+                formControlName="en_job_desc_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_job_desc_title">Ar title</label>
+              <input
+                id="ar_job_desc_title"
+                class="form-control"
+                type="text"
+                name="ar_job_desc_title"
+                formControlName="ar_job_desc_title"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_job_desc_title">En about job</label>
+              <textarea
+                id="en_about_job_text"
+                class="form-control"
+                type="text"
+                name="en_about_job_text"
+                formControlName="en_about_job_text"
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_about_job_text">Ar about job</label>
+              <textarea
+                id="ar_about_job_text"
+                class="form-control"
+                type="text"
+                name="ar_about_job_text"
+                [ngModel]="ckeditorContent"
+
+                formControlName="ar_about_job_text"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_job_desc_text">En Description</label>
+              <ckeditor
+
+                [ngModel]="ckeditorContent"
+
+                formControlName="en_job_desc_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="ar_job_desc_text">Ar Description</label>
+              <ckeditor
+
+                [ngModel]="ckeditorContent"
+
+                formControlName="ar_job_desc_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_job_req_title">En job requirement title</label>
+              <input
+                id="en_job_req_title"
+                class="form-control"
+                type="text"
+                name="en_job_req_title"
+                [ngModel]="ckeditorContent"
+
+                formControlName="en_job_req_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="ar_job_req_title">Ar job requirement title</label>
+              <input
+                id="ar_job_req_title"
+                class="form-control"
+                type="text"
+                name="ar_job_req_title"
+                [ngModel]="ckeditorContent"
+
+                formControlName="ar_job_req_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_title">En job requirement text</label>
+              <ckeditor
+              [ngModel]="ckeditorContent"
+              formControlName="en_job_req_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_title">Ar job requirement text</label>
+              <ckeditor
+              [ngModel]="ckeditorContent"
+
+              formControlName="ar_job_req_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="experience_needed">Experience needed</label>
+              <input
+                id="experience_needed"
+                class="form-control"
+                type="text"
+                name="experience_needed"
+                formControlName="experience_needed"
+              />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="createJob.invalid"
+        >
+          Create job
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #updateModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Update {{modalEdit?.en_job_desc_title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createJob" (ngSubmit)="onUpdate(createJob, modalEdit?.id)">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_job_desc_title">En title</label>
+              <input
+                id="en_job_desc_title"
+                class="form-control"
+                type="text"
+                [ngModel]="modalEdit?.en_job_desc_title"
+                name="en_job_desc_title"
+                formControlName="en_job_desc_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_job_desc_title">Ar title</label>
+              <input
+                id="ar_job_desc_title"
+                class="form-control"
+                type="text"
+                name="ar_job_desc_title"
+                [ngModel]="modalEdit?.ar_job_desc_title"
+
+                formControlName="ar_job_desc_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_job_desc_title">En about job</label>
+              <textarea
+                id="en_about_job_text"
+                class="form-control"
+                type="text"
+                [ngModel]="modalEdit?.en_about_job_text"
+                name="en_about_job_text"
+                formControlName="en_about_job_text"
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_about_job_text">Ar about job</label>
+              <textarea
+                id="ar_about_job_text"
+                class="form-control"
+                type="text"
+                name="ar_about_job_text"
+                [ngModel]="modalEdit?.ar_about_job_text"
+
+                formControlName="ar_about_job_text"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_job_desc_text">En Description</label>
+              <ckeditor
+
+                [ngModel]="modalEdit?.en_job_desc_text"
+
+                formControlName="en_job_desc_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="ar_job_desc_text">Ar Description</label>
+              <ckeditor
+
+                [ngModel]="modalEdit?.ar_job_desc_text"
+
+                formControlName="ar_job_desc_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="en_job_req_title">En job requirement title</label>
+              <input
+                id="en_job_req_title"
+                class="form-control"
+                type="text"
+                name="en_job_req_title"
+                [ngModel]="modalEdit?.en_job_req_title"
+
+                formControlName="en_job_req_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="ar_job_req_title">Ar job requirement title</label>
+              <input
+                id="ar_job_req_title"
+                class="form-control"
+                type="text"
+                name="ar_job_req_title"
+                [ngModel]="modalEdit?.ar_job_req_title"
+
+                formControlName="ar_job_req_title"
+              />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_title">En job requirement text</label>
+              <ckeditor
+              [ngModel]="modalEdit?.en_job_req_text"
+              formControlName="en_job_req_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="en_title">Ar job requirement text</label>
+              <ckeditor
+              [ngModel]="modalEdit?.ar_job_req_text"
+
+              formControlName="ar_job_req_text"
+              ></ckeditor>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="experience_needed">Experience needed</label>
+              <input
+                id="experience_needed"
+                class="form-control"
+                type="text"
+                [ngModel]="modalEdit?.experience_needed"
+
+                name="experience_needed"
+                formControlName="experience_needed"
+              />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="createJob.invalid"
+        >
+          Update job
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

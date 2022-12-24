@@ -1,0 +1,151 @@
+
+<div class="" *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="" *ngIf="loadingAction">
+  <app-loader-action></app-loader-action>
+</div>
+<div class="card" [ngClass]="{'card-fullscreen': fullscreed}">
+
+<div class="card-content collapse show">
+
+  <div class="card-header bg-primary bg-darken-2 text-center align-items-center card-title-bold text-capitalize row no-gutters">
+    <div class="col-9">
+
+      <h3 class="mb-0 text-left">{{pageName}}</h3>
+    </div>
+
+    <div class="col-3 text-right">
+
+      <button (click)="fullScreen()" *ngIf="!fullscreed" class="btn box-shadow-2 btn-light"><i class="ficon ft-maximize"></i></button>
+      <button (click)="fullScreen()" *ngIf="fullscreed" class="btn box-shadow-2 btn-light"><i class="ficon ft-minimize"></i></button>
+    </div>
+  </div>
+    <div class="card-body">
+
+    <div class="card-content collapse show" >
+        <div class="card-body card-dashboard table-responsive">
+            <table class="table table-striped table-bordered dom-jQuery-events">
+              <thead>
+                  <tr>
+                      <th>id</th>
+                      <th>Name</th>
+                      <th *ngIf="fullscreed">Phone</th>
+                      <th>Date</th>
+                      <th style="width: 63px;">Message</th>
+                      <th>View</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr *ngFor="let message of messages | paginate: { itemsPerPage: 5, currentPage: page }">
+                      <td>{{message.id}}</td>
+                      <td>{{message.name }}</td>
+                      <td *ngIf="fullscreed">{{message.phone}}</td>
+                      <td style="min-width: 137px;">
+                        {{ message.created_at | date: "medium" }}
+                      </td>
+                      <td class="text-overflow" style="width: 63px;"> {{message.message }}
+                      <!-- <td>{{message.message}}</td> -->
+                      <td class="text-truncate">
+                        <button
+                          type="button"
+                          [attr.data-toggle]="'modal'"
+                          [attr.data-target]="'#messageModal' + message.id"
+                          class="btn btn-primary text-white"
+                        >
+                          <i class="la la-search" aria-hidden="true"></i>
+                        </button>
+                      </td>
+
+                  </tr>
+
+
+
+              </tbody>
+
+            </table>
+            <pagination-controls [maxSize]="5"  (pageChange)="page = $event" ></pagination-controls>
+        </div>
+
+  </div>
+</div>
+<!-- Modal -->
+
+</div>
+<div
+  *ngFor="let messageModal of messages"
+  class="modal fade"
+  id="messageModal{{ messageModal.id }}"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mb-0" id="exampleModalLabel">
+          Message details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h4><i class="las la-address-card"></i> Name:</h4>
+                <p>{{ messageModal.name  | slice:0:24 }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h4><i class="la la-at"></i> Email:</h4>
+                <p>{{ messageModal.email | slice:0:20 }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h4><i class="las la-phone-volume"></i> Phone:</h4>
+                <p>{{ messageModal.phone | slice:0:24 }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h4><i class="las la-calendar"></i> Date:</h4>
+                <p>{{ messageModal.created_at  | slice:0:24 }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <h4><i class="las la-comments"></i> Message:</h4>
+                <p>{{ messageModal.message }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
