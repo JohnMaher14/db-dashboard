@@ -39,8 +39,8 @@
                       <th>id</th>
                       <th>Name</th>
                       <th>Role</th>
-                      <!-- <th *ngIf="fullscreed">Feedback</th> -->
-                      <!-- <th>Image</th> -->
+                      <th>Rating</th>
+                      <th>Image</th>
 
                       <th class="action_minwidth">Action</th>
                   </tr>
@@ -51,15 +51,62 @@
                     <td>{{feedback.id}}</td>
                     <td>{{feedback.en_name}}</td>
                     <td>{{feedback.en_role}}</td>
+                    <td *ngIf="feedback.feedback_star == 5 ">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </td>
+                    <td *ngIf="feedback.feedback_star == 4 ">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+
+                    </td>
+                    <td *ngIf="feedback.feedback_star == 3 ">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+
+                    </td>
+                    <td *ngIf="feedback.feedback_star == 2 ">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+
+                    </td>
+                    <td *ngIf="feedback.feedback_star == 1 ">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+
+                    </td>
+                    <td *ngIf="feedback.feedback_star == null ">
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+                      <i class="far fa-star" aria-hidden="true"></i>
+
+                    </td>
                     <!-- <td *ngIf="fullscreed">{{feedback.en_feedback | slice:0:50}}</td> -->
-                    <!-- <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
+                    <td *ngIf="!fullscreed"><button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button></td>
                     <td *ngIf="fullscreed">
                       <div class="d-flex align-items-center">
 
-                        <img [src]="feedbackImage+feedback.image" width="60px" height="40px" alt="">
+                        <img [src]="feedback?.client_image == null ? 'assets/images/avatar.png' : feedbackImage+feedback?.client_image" [ngClass]="{'bg-white': feedback.client_image == null }" width="60px" height="40px" alt="">
                         <button type="button" [attr.data-toggle]="'modal'" [attr.data-target]="['#feedbackGallery'+feedback.id]" class="btn btn-primary text-white"><i class="la la-search fw-600" aria-hidden="true"></i></button>
                       </div>
-                    </td> -->
+                    </td>
 
                       <td class="row justify-content-start no-gutters">
                         <a routerLink="/feedbacks/{{feedback?.id}}" class="btn btn-round mr-1 btn-success"><i class="la la-edit"></i></a>
@@ -93,7 +140,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-              <img [src]="feedbackImage+feedbackGallery.image" class="w-100" alt="">      </div>
+              <img [src]="feedbackGallery?.client_image == null ? 'assets/images/avatar.png' : feedbackImage+feedbackGallery?.client_image" class="w-100" alt="">      </div>
 
             </div>
           </div>
@@ -112,7 +159,7 @@
   <div class="modal-body">
     <form [formGroup]="createFeedback" (ngSubmit)="onCreate(createFeedback)">
       <div class="modal-body">
-        <div class="row">
+        <div class="row justify-content-center ">
           <div class="col-md-6">
 
             <div class="form-group">
@@ -170,7 +217,7 @@
               <p class="mb-0" *ngIf="createFeedback.controls['ar_feedback'].errors['required']">Arabic feedback is required</p>
             </div>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="status">Status</label>
               <select id="status" class="form-control" type="text" name="status" formControlName="status">
@@ -183,16 +230,69 @@
               <p class="mb-0" *ngIf="createFeedback.controls['status'].errors['required']">Status is required</p>
             </div>
           </div>
-          <!-- <div class="col-md-6">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="image">Image</label>
               <input id="image" (change)="image($event)" class="form-control" type="file" name="image">
             </div>
-            <div *ngIf="createFeedback.controls['image'].touched && createFeedback.controls['image'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
-              <p class="mb-0" *ngIf="createFeedback.controls['image'].errors['required']">Image is required</p>
+            <div *ngIf="createFeedback.controls['client_image'].touched && createFeedback.controls['client_image'].errors != null" class="alert mt-2 alert-danger text-left" role="alert">
+              <p class="mb-0" *ngIf="createFeedback.controls['client_image'].errors['required']">Image is required</p>
             </div>
-          </div> -->
+          </div>
+          <div class="col-12 text-center">
 
+            <label for="rating">Rating</label>
+            <div class="star-source">
+
+                <svg>
+                    <linearGradient x1="50%" y1="5.41294643%" x2="87.5527344%"
+                        y2="65.4921875%" id="grad">
+                        <stop stop-color="#ffd700" offset="0%"></stop>
+                        <stop stop-color="#ffd700" offset="60%"></stop>
+                        <stop stop-color="#ffd700" offset="100%"></stop>
+                    </linearGradient>
+                    <symbol id="star" viewBox="153 89 106 108">
+                        <polygon id="star-shape" stroke="url(#grad)" stroke-width="5"
+                            fill="currentColor"
+                            points="206 162.5 176.610737 185.45085 189.356511 150.407797 158.447174 129.54915 195.713758 130.842203 206 95 216.286242 130.842203 253.552826 129.54915 222.643489 150.407797 235.389263 185.45085">
+                        </polygon>
+                    </symbol>
+                </svg>
+            </div>
+            <div class="star-container">
+                <input type="radio" name="feedback_star" formControlName="feedback_star"  id="five" value="5">
+                <label for="five">
+                    <svg class="star">
+                        <use xlink:href="#star" />
+                    </svg>
+                </label>
+                <input type="radio" name="feedback_star" formControlName="feedback_star" id="four" value="4">
+                <label for="four">
+                    <svg class="star">
+                        <use xlink:href="#star" />
+                    </svg>
+                </label>
+                <input type="radio" name="feedback_star" formControlName="feedback_star" id="three" value="3">
+                <label for="three">
+                    <svg class="star">
+                        <use xlink:href="#star" />
+                    </svg>
+                </label>
+                <input type="radio" name="feedback_star" formControlName="feedback_star" id="two" value="2">
+                <label for="two">
+                    <svg class="star">
+                        <use xlink:href="#star" />
+                    </svg>
+                </label>
+                <input type="radio" name="feedback_star" required formControlName="feedback_star" id="one" value="1" checked>
+                <label for="one">
+                    <svg class="star">
+                        <use xlink:href="#star" />
+                    </svg>
+                </label>
+
+            </div>
+        </div>
 
         </div>
       </div>

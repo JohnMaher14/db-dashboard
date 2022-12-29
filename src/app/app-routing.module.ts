@@ -30,6 +30,7 @@ import { MessagesComponent } from './content/pages/messages/messages.component';
 import { CareerComponent } from './content/pages/career/career.component';
 import { CareerDetailsComponent } from './content/pages/career/career-details/career-details.component';
 import { BlogsComponent } from './content/pages/blogs/blogs.component';
+import { ClientFeedbackFormComponent } from './content/pages/client-feedback-form/client-feedback-form.component';
 
 const routes: Routes = [
 
@@ -56,6 +57,7 @@ const routes: Routes = [
   {path: 'case-study-model-gallery/edit/:case_study_model/:case_study_id/:id', canActivate:[AuthGuard] , component:EditCaseStudyModalGalleryComponent},
   {path: 'sliders', canActivate:[AuthGuard] , component:SlidersComponent},
   {path: 'sliders/:id', canActivate:[AuthGuard] , component:EditSlidersComponent},
+  {path: 'clientsFeedbackForm', canActivate:[AuthGuard] , component:ClientFeedbackFormComponent},
   {path: 'teams', canActivate:[AuthGuard] , component:TeamsComponent},
   {path: 'teams/:id', canActivate:[AuthGuard] , component:EditTeamComponent},
   {path: 'banners', canActivate:[AuthGuard] , component:BannerImagesComponent},

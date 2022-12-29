@@ -263,7 +263,7 @@
             <div class="form-group">
               <label for="priority_number">Priority number</label>
               <select id="priority_number" class="form-control" name="priority_number" formControlName="priority_number" [ngModel]="modalEdit?.priority_number">
-                <option value="">Select number</option>
+                <option selected>{{modalEdit?.priority_number}}</option>
                 <option value="{{number}}" *ngFor="let number of priorityNumber | slice:-11">{{number}}</option>
               </select>
             </div>
@@ -363,8 +363,8 @@
           <div class="col-md-6"  >
             <div class="form-group">
               <label for="type">Type</label>
-              <select id="type" (change)="onChangeType($event)" class="form-control" name="type" formControlName="type">
-                <option value="">Select type</option>
+              <select id="type"  (change)="onChangeType($event)" class="form-control" name="type" formControlName="type">
+                <option value="" selected>Select type</option>
                 <option value="happy">Partner</option>
                 <option value="case">Client</option>
                 <option value="test">Test</option>
@@ -376,7 +376,7 @@
             <div class="form-group">
               <label for="priority_number">Priority number</label>
               <select id="priority_number" class="form-control" name="priority_number" formControlName="priority_number">
-                <option value="">Select number</option>
+                <option value="" selected>Select number</option>
                 <option value="{{number}}" *ngFor="let number of priorityNumber | slice:-11">{{number}}</option>
               </select>
             </div>

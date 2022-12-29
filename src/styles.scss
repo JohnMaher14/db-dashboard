@@ -1,3 +1,5 @@
+@import 'node_modules/ngx-toastr/toastr';
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
 $mainColor: #290707;
 $secondaryColor: #ed2924;
@@ -343,12 +345,76 @@ modal-container{
 .modal{
   background-color: rgba(0,0,0,0.5);
 }
-// .card{
+svg {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.15rem;
+}
 
-//   &.card-fullscreen {
-//     z-index: 1038 !important;
-//   }
-// }
+
+/* hide radio buttons */
+
+input[name="feedback_star"] {
+  display: inline-block;
+  width: 0;
+  opacity: 0;
+  margin-left: -2px;
+}
+
+/* hide source svg */
+
+.star-source {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+
+/* set initial color to transparent so fill is empty*/
+
+.star {
+  color: transparent;
+  transition: color 0.2s ease-in-out;
+}
+
+
+/* set direction to row-reverse so 5th star is at the end and ~ can be used to fill all sibling stars that precede last starred element*/
+
+.star-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+.star-container label{
+  margin: 0 8px;
+
+}
+
+label:hover ~ label .star,
+svg.star:hover,
+input[name="feedback_star"]:focus ~ label .star,
+input[name="feedback_star"]:checked ~ label .star {
+  color: #ffd700;
+}
+svg.star.checked{
+  color: #ffd700;
+}
+input[name="feedback_star"]:checked + label .star {
+  animation: starred 0.5s;
+}
+
+input[name="feedback_star"]:checked + label {
+  animation: scaleup 1s;
+}
+
+@keyframes scaleup {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -49,7 +49,7 @@
                 <textarea id="ar_feedback" class="form-control" type="text" name="ar_feedback" formControlName="ar_feedback" [ngModel]="feedback?.ar_feedback"></textarea>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="status">Status</label>
                 <select id="status" class="form-control"  name="status" formControlName="status"  [ngModel]="feedback?.status">
@@ -59,7 +59,7 @@
                 </select>
               </div>
             </div>
-            <!-- <div class="col-md-6">
+            <div class="col-md-6">
               <div class="row align-items-center">
                 <div class="col-lg-10">
                   <div class="form-group">
@@ -69,11 +69,229 @@
 
                 </div>
                 <div class="col-lg-2">
-                  <img class="w-100" [src]="feedbackImage+feedback.image" alt="">
+                  <img class="w-100" [src]="feedbackImage+feedback?.client_image" alt="">
                 </div>
               </div>
-            </div> -->
+            </div>
+            <div class="col-12 text-center">
 
+              <label for="rating">Rating</label>
+              <div class="star-source">
+
+                  <svg>
+                      <linearGradient x1="50%" y1="5.41294643%" x2="87.5527344%"
+                          y2="65.4921875%" id="grad">
+                          <stop stop-color="#ffd700" offset="0%"></stop>
+                          <stop stop-color="#ffd700" offset="60%"></stop>
+                          <stop stop-color="#ffd700" offset="100%"></stop>
+                      </linearGradient>
+                      <symbol id="star" viewBox="153 89 106 108">
+                          <polygon id="star-shape" stroke="url(#grad)" stroke-width="5"
+                              fill="currentColor"
+                              points="206 162.5 176.610737 185.45085 189.356511 150.407797 158.447174 129.54915 195.713758 130.842203 206 95 216.286242 130.842203 253.552826 129.54915 222.643489 150.407797 235.389263 185.45085">
+                          </polygon>
+                      </symbol>
+                  </svg>
+              </div>
+              <div *ngIf="feedback?.feedback_star == '1'" class="star-container">
+                  <input type="radio" name="feedback_star"  [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="five" value="5">
+                  <label for="five">
+                      <svg class="star ">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" id="four" value="4">
+                  <label for="four">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" id="three" value="3">
+                  <label for="three">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" id="two" value="2">
+                  <label for="two">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" required formControlName="feedback_star" id="one" value="1" checked>
+                  <label for="one">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+
+              </div>
+              <div *ngIf="feedback?.feedback_star == '2'" class="star-container">
+                  <input type="radio" name="feedback_star"  [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="five" value="5">
+                  <label for="five">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" id="four" value="4">
+                  <label for="four">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" id="three" value="3">
+                  <label for="three">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" required id="two" value="2" checked>
+                  <label for="two">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star"  formControlName="feedback_star" id="one" value="1" >
+                  <label for="one">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+
+              </div>
+              <div *ngIf="feedback?.feedback_star == '3'" class="star-container">
+                  <input type="radio" name="feedback_star"  [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="five" value="5">
+                  <label for="five">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" id="four" value="4">
+                  <label for="four">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" required id="three" value="3" checked>
+                  <label for="three">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="two" value="2" >
+                  <label for="two">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star"  formControlName="feedback_star" id="one" value="1" >
+                  <label for="one">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+
+              </div>
+              <div *ngIf="feedback?.feedback_star == '4'" class="star-container">
+                  <input type="radio" name="feedback_star"  [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="five" value="5">
+                  <label for="five">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star" required id="four" value="4" checked>
+                  <label for="four">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="three" value="3" >
+                  <label for="three">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="two" value="2" >
+                  <label for="two">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star"  formControlName="feedback_star" id="one" value="1" >
+                  <label for="one">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+
+              </div>
+              <div *ngIf="feedback?.feedback_star == '5'" class="star-container">
+                  <input type="radio" name="feedback_star"  [ngModel]="feedback?.feedback_star" formControlName="feedback_star" [required]="true" id="five" value="5" [checked]="true">
+                  <label for="five">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="four" value="4" >
+                  <label for="four">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="three" value="3" >
+                  <label for="three">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="two" value="2" >
+                  <label for="two">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star"  formControlName="feedback_star" id="one" value="1" >
+                  <label for="one">
+                      <svg class="star checked">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+
+              </div>
+              <div *ngIf="feedback?.feedback_star == null" class="star-container">
+                  <input type="radio" name="feedback_star"  [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="five" value="5" >
+                  <label for="five">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="four" value="4" >
+                  <label for="four">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="three" value="3" >
+                  <label for="three">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star" formControlName="feedback_star"  id="two" value="2" >
+                  <label for="two">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+                  <input type="radio" name="feedback_star" [ngModel]="feedback?.feedback_star"  formControlName="feedback_star" id="one" value="1" checked required>
+                  <label for="one">
+                      <svg class="star">
+                          <use xlink:href="#star" />
+                      </svg>
+                  </label>
+
+              </div>
+          </div>
 
             <button type="submit" class="btn btn-primary text-right" [disabled]="updateFeedback.invalid">Update feedback</button>
           </div>

@@ -22,37 +22,57 @@ export class FeedbacksService {
     return this._HttpClient.get(`${environment.apiUrl}feedbacks_update_data/${id}`)
   }
   CreateFeedback(
-    formData:any
+    en_name:any,
+    ar_name:any,
+    en_role:any,
+    ar_role:any,
+    en_feedback:any,
+    ar_feedback:any,
+    status:any,
+    client_image:File,
+    feedback_star:any
+
 
   ):Observable<any>{
-    // var formData = new FormData();
-    // formData.append('en_name',en_name);
-    // formData.append('ar_name',ar_name);
-    // formData.append('en_role',en_role);
-    // formData.append('ar_role',ar_role);
-    // formData.append('en_feedback',en_feedback);
-    // formData.append('ar_feedback',ar_feedback);
-    // formData.append('status',status);
+    var formData = new FormData();
+    formData.append('en_name',en_name);
+    formData.append('ar_name',ar_name);
+    formData.append('en_role',en_role);
+    formData.append('ar_role',ar_role);
+    formData.append('en_feedback',en_feedback);
+    formData.append('ar_feedback',ar_feedback);
+    formData.append('status',status);
+    formData.append('client_image',client_image);
+    formData.append('feedback_star',feedback_star);
 
-    // formData.append('image',image);
     return this._HttpClient.post(`${environment.apiUrl}feedbacks_store` , formData)
   }
   updateFeedback(
     id:number,
-    formData:any
+    en_name:any,
+    ar_name:any,
+    en_role:any,
+    ar_role:any,
+    en_feedback:any,
+    ar_feedback:any,
+    status:any,
+    client_image:File,
+    feedback_star:any
 
 
   ):Observable<any>{
-    // var formData = new FormData();
-    // formData.append('en_name',en_name);
-    // formData.append('ar_name',ar_name);
-    // formData.append('en_role',en_role);
-    // formData.append('ar_role',ar_role);
-    // formData.append('en_feedback',en_feedback);
-    // formData.append('ar_feedback',ar_feedback);
-    // formData.append('status',status);
+    var formData = new FormData();
+    formData.append('en_name',en_name);
+    formData.append('ar_name',ar_name);
+    formData.append('en_role',en_role);
+    formData.append('ar_role',ar_role);
+    formData.append('en_feedback',en_feedback);
+    formData.append('ar_feedback',ar_feedback);
+    formData.append('status',status);
 
-    // formData.append('image',image);
+    formData.append('client_image',client_image);
+    formData.append('feedback_star',feedback_star);
+
     return this._HttpClient.post(`${environment.apiUrl}feedbacks_update/${id}` , formData)
   }
   deleteFeedback(id:number , formData:any):Observable<any>{

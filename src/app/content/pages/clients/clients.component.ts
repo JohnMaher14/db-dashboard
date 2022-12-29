@@ -58,7 +58,7 @@ export class ClientsComponent implements OnInit {
     en_title : new FormControl('', Validators.required),
     en_text : new FormControl('..'),
     ar_title : new FormControl('..', Validators.required),
-    ar_text : new FormControl('..'),
+    ar_text : new FormControl('..' , ),
     type : new FormControl('', Validators.required),
     priority_number : new FormControl(null),
     social_media_status : new FormControl(''),
@@ -81,7 +81,12 @@ export class ClientsComponent implements OnInit {
       ,{
         class: 'modal-dialog-centered'
       })
-      this.createClient.reset();
+      this.createClient.controls['en_title'].reset()
+      this.createClient.controls['ar_title'].reset()
+      this.createClient.controls['social_media_status'].reset()
+      this.createClient.controls['mobile_app_status'].reset()
+      this.createClient.controls['web_dev_status'].reset()
+      this.createClient.controls['logo'].reset()
   }
   pageChanged(event:any){
     this.config.currentPage = event;
@@ -118,42 +123,31 @@ export class ClientsComponent implements OnInit {
         let arrayOfNotAvailableNumbers = response.arrayData.sort(function(a:any, b:any) {
           return a - b;
         });;
+        
         console.log(arrayOfNotAvailableNumbers);
-        for (let y = 0; y < 11; y = y + 1){
-          let x = y + priorityNumber+1;
-          this.priorityNumber.push(x)
-          console.log(this.priorityNumber);
+        var numArray = arrayOfNotAvailableNumbers;
+        var mia = numArray.reduce(function(acc:any, cur:any, ind:any, arr:any) {
+          var diff = cur - arr[ind-1];
+          if (diff > 1) {
+            var i = 1;
+            while (i < diff) {
+              acc.push(arr[ind-1]+i);
+              i++;
+            }
+          }
+          return acc;
+        }, []);
+        let lastIndexOfArray = Array.from(mia).slice(-1)[0]
+        function range(start:any) {
+          const mylength = 11 - Array.from(mia).length;
+          return Array.from({ length: mylength }, (_, i) => start + i);
+          }
+          const myArr = range(lastIndexOfArray);
+          let arrayRange = myArr.concat(Array.from(mia))
 
+          let filtered  = arrayRange.filter(val => !arrayOfNotAvailableNumbers.includes(val) ).sort();
 
-        }
-        // for (let y = 0; y < 11; y = y + 1){
-          // let x = y + response.priorityNumber+1;
-          // console.log(x);
-          // this.priorityNumber.push(x)
-          // let testArray = arrayOfNotAvailableNumbers.map(
-          //   (test:any) => {
-          //     console.log(test);
-          //     console.log(response.priorityNumber);
-          //     return test
-          //     // return test != response.priorityNumber
-          //   }
-          // )
-          // console.log(testArray);
-
-        // }
-        // var numArray = arrayOfNotAvailableNumbers;
-        // var mia = numArray.reduce(function(acc:any, cur:any, ind:any, arr:any) {
-        //   var diff = cur - arr[ind-1];
-        //   if (diff > 1) {
-        //     var i = 1;
-        //     while (i < diff) {
-        //       acc.push(arr[ind-1]+i);
-        //       i++;
-        //     }
-        //   }
-        //   return acc;
-        // }, []);
-        // console.log(Array.from(mia) );
+          this.priorityNumber = [...new Set(filtered)];
       }
     )
   }

@@ -65,15 +65,16 @@ export class FeedbacksComponent implements OnInit {
     ar_name : new FormControl('', Validators.required),
     ar_role : new FormControl('', Validators.required),
     ar_feedback : new FormControl('', Validators.required),
-    // image : new FormControl('', Validators.required),
+    client_image : new FormControl('', Validators.required),
+    feedback_star: new FormControl('')
   })
 
   image(event:any){
     const file = event.target.files ? event.target.files[0] : '';
     this.createFeedback.patchValue({
-      image: file
+      client_image: file
     })
-    this.createFeedback.get('image')?.updateValueAndValidity()
+    this.createFeedback.get('client_image')?.updateValueAndValidity()
   }
 
   onDelete(id:number , data:any){
@@ -96,7 +97,15 @@ export class FeedbacksComponent implements OnInit {
   onCreate(createFeedback:FormGroup){
     this.loadingAction = true
     this._FeedbacksService.CreateFeedback(
-      createFeedback.value
+      this.createFeedback.value.en_name,
+      this.createFeedback.value.ar_name,
+      this.createFeedback.value.en_role,
+      this.createFeedback.value.ar_role,
+      this.createFeedback.value.en_feedback,
+      this.createFeedback.value.ar_feedback,
+      this.createFeedback.value.status,
+      this.createFeedback.value.client_image,
+      this.createFeedback.value.feedback_star
     ).subscribe(
       (response) =>{
         if(response.success){
@@ -113,6 +122,7 @@ export class FeedbacksComponent implements OnInit {
         }
       }
     )
+    // console.log(createFeedback);
   }
   ngOnInit(): void {
     this.showFeedbacks()

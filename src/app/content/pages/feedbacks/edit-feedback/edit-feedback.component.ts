@@ -44,7 +44,8 @@ export class EditFeedbackComponent implements OnInit {
     ar_name : new FormControl('', Validators.required),
     ar_role : new FormControl('', Validators.required),
     ar_feedback : new FormControl('', Validators.required),
-    // image : new FormControl(null),
+    image : new FormControl(null),
+    feedback_star: new FormControl(null)
 })
   image(event:any){
     const file = event.target.files ? event.target.files[0] : '';
@@ -60,7 +61,15 @@ export class EditFeedbackComponent implements OnInit {
     this.actionLoading = true
     this._FeedbacksService.updateFeedback(
       this.indexForNumbers,
-      updateFeedback.value
+      this.updateFeedback.value.en_name,
+      this.updateFeedback.value.ar_name,
+      this.updateFeedback.value.en_role,
+      this.updateFeedback.value.ar_role,
+      this.updateFeedback.value.en_feedback,
+      this.updateFeedback.value.ar_feedback,
+      this.updateFeedback.value.status,
+      this.updateFeedback.value.image,
+      this.updateFeedback.value.feedback_star
 
     ).subscribe(
       (response) =>{
